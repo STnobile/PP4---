@@ -27,6 +27,7 @@
    "cSpell.words": [
       "cloudinary",
       "gunicorn",
+      "herokuapp",
       "wsgi"
    ]
 }
