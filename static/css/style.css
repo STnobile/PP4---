@@ -219,9 +219,7 @@
   opacity:0.2;
 }
 
-/*############
-TESTIMONIALS
-##############*/
+/* -------------------------------------------------- TESTIMONIALS*/
 
 .carousel .carousel-item {
   color: #999;
@@ -302,7 +300,7 @@ TESTIMONIALS
 
 
 
-/* ---------------------------------------------------------------CONTACT*/
+/* --------------------------------------------------------------- CONTACT*/
 
 .form-control {
   box-shadow: none !important;
@@ -345,18 +343,18 @@ TESTIMONIALS
 
 .title-box .border,.btn-primary,.back-to-top,
 .logo i,.question-q-box,.social-circle li a:hover {
-  background-color: #f16000 !important;
+  background-color: rgb(255 0 177 / 53%) !important;
 }
 .title-box .title-alt,.text-colored,.footer a:hover,
 .navbar-custom .navbar-nav li a:hover,
 .navbar-custom .navbar-nav li a:focus,
 .navbar-custom .navbar-nav li a:active,
 .navbar-custom .navbar-nav li.active a {
-  color: #f16000;
+  color: rgb(255 0 177 / 53%);
 }
 
 .btn-primary {
-  border: 1px solid #f16000 !important;
+  border: 1px solid rgb(255 0 177 / 53%) !important;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -373,8 +371,8 @@ TESTIMONIALS
 .open>.dropdown-toggle.btn-primary.focus, 
 .open>.dropdown-toggle.btn-primary:focus, 
 .open>.dropdown-toggle.btn-primary:hover {
-  background-color: #d85600 !important;
-  border: 1px solid #d85600 !important;
+  background-color: rgb(255 0 177 / 53%) !important;
+  border: 1px solid rgba(156, 48, 123, 0.53) !important;
 }
 
 .btn-shadow.btn-primary {

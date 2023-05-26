@@ -67,7 +67,7 @@
 
 
 <section id="services">
-  <div class="bg-secondary text-center py-5 mb-4">
+  <div class="bg-info text-center py-5 mb-4">
       <div class="container">
         <h1 class="fw-light text-white">Services</h1>
         <p class="overview">We provide compassionate and expert care to our community. You are at the center of everything we do. Let us be your healthcare partner.</p>
@@ -108,7 +108,7 @@
       <!-- Team Member 4 -->
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-0 shadow">
-          <img src="{% static 'img/service4.jpg' %}" class="card-img-top" alt="...">
+          <img src="{% static '' %}" class="card-img-top" alt="...">
           <div class="card-body text-center">
             <h5 class="card-title mb-0">PrEP Therapy</h5>
             <div class="card-text text-black-50">Stay safe if you are at high exposure of HIV.</div>
@@ -163,7 +163,7 @@
             <div class="contact-detail-box">
               <i class="far fa-envelope text-colored fa-3x"></i>
               <h4>Get In Touch</h4>
-              <abbr title="Phone">P:</abbr> (123) 456-7890<br>
+              <abbr title="Phone">P:</abbr> +46 768941799<br>
               E: <a href="mailto:email@email.com" class="text-muted">email@email.com</a>
             </div>
           </div><!-- end col -->
@@ -174,8 +174,8 @@
               <h4>Our Location</h4>
   
               <address>
-              795 Folsom Ave, Suite 600<br>
-              San Francisco, CA 94107<br>
+                Norrlandsgatan 24,<br>
+                111 43 Stockholm<br>
             </address>
             </div>
           </div><!-- end col -->
@@ -189,7 +189,7 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="contact-map">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.8290675544672!2d18.068746877195505!3d59.33580757461744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d5c918d3fa7%3A0x7d187e0adb521adf!2sNorrlandsgatan%2024%2C%20111%2043%20Stockholm!5e0!3m2!1sen!2sse!4v1685015768811!5m2!1sen!2sse" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width: 100%; height: 360px;"></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.8290675544672!2d18.068746877195505!3d59.33580757461744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d5c918d3fa7%3A0x7d187e0adb521adf!2sNorrlandsgatan%2024%2C%20111%2043%20Stockholm!5e0!3m2!1sen!2sse!4v1685015768811!5m2!1sen!2sse" width="540" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width: 100%; height: 360px;"></iframe>
             </div>
           </div>
           <!-- end col -->
@@ -198,18 +198,21 @@
           <div class="col-sm-6">
             <form role="form" name="ajax-form" id="ajax-form" method="post" class="form-main" action="{% url 'home' %}">
             {% csrf_token %}
+            <!-- Form-name -->
               <div class="form-group">
                 <label for="name2">Name</label>
                 <input class="form-control" id="name2" name="name" type="text" placeholder="name">
                 <div class="error" id="err-name" style="display: none;">Please enter name</div>
-              </div> <!-- /Form-name -->
-  
+              </div> 
+
+            <!-- Form-email -->
               <div class="form-group">
                 <label for="email2">Email</label>
                 <input class="form-control" id="email2" name="email" type="text" placeholder="email">
                 <div class="error" id="err-emailvld" style="display: none;">E-mail is not a valid format</div> 
-              </div> <!-- /Form-email -->
+              </div> 
   
+              <!-- Form-message -->
               <div class="form-group">
                 <label for="message2">Message</label>
                 <textarea class="form-control" id="message2" name="message" rows="5" placeholder="message">Message</textarea>

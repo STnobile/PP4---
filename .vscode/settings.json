@@ -25,9 +25,14 @@
    "terminal.integrated.gpuAcceleration": "canvas",
    "editor.defaultFormatter": "HookyQR.beautify",
    "cSpell.words": [
+      "Clinica",
       "cloudinary",
+      "EADDRESS",
+      "EPASSWORD",
       "gunicorn",
       "herokuapp",
+      "Norrlandsgatan",
+      "Vismara",
       "wsgi"
    ]
 }
