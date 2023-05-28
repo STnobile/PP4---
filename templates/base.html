@@ -14,15 +14,18 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 
-<style>
-    </style>
-<body>
+
+<!--<style>
+{% block style %}{% endblock style %}
+</style>
+<body>-->
 
   <div class="header" style="
-        background: rgb(150, 139, 74) url('../static/media/doc1.png') no-repeat fixed right
-        {% if 'appointment' in request.path %}
-        max-height:300px!important;min-height:300px!important;
-        {% endif %}">
+  background: rgba(168, 152, 52, 0.772) url('../static/media/doc1.png') no-repeat fixed right
+    {% if 'appointment' in request.path %}
+    background:rgba(168, 152, 52, 0.772)
+    max-height:300px!important;min-height:300px!important;
+    {% endif %}">
     
     <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
         <div class="container"><a class="navbar-brand" href="{% url 'home' %}">Family Doctor X</a>
@@ -52,7 +55,7 @@
                   </li>
                   {% endif %}
                   <li class="nav-item" role="presentation">
-                    <a href="" style="float: left;cursor:pointer;" aria-expanded="true" title="You Have 6 New Appointments">
+                    <a href="{% url 'manage' %}" style="float: left;cursor:pointer;" aria-expanded="true" title="You Have 6 New Appointments">
                       <i class="far fa-bell" style="font-size: 20px; float: left; color: black">
                       </i>
                   </a>
@@ -69,15 +72,14 @@
 </div>
 
 
-    {% block content %}
-    {% endblock content %}
+    {% block content %}{% endblock content %}
 
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
   
-
-<script>
-    
- </script>
+ <!--<script>
+    {% block script %}
+    {% endblock script %}
+ </script>-->
 </body>
 
 </html>

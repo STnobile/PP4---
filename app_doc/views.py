@@ -11,9 +11,10 @@ import datetime
 from django.template import Context
 from django.template.loader import render_to_string, get_template
 
+
 class HomeTemplateView(TemplateView):
     template_name = "index.html"
-    
+
     def post(self, request):
         name = request.POST.get("name")
         email = request.POST.get("email")
@@ -53,13 +54,13 @@ class AppointmentTemplateView(TemplateView):
         messages.add_message(request, messages.SUCCESS, f"Thanks {fname} for making an appointment, we will email you ASAP!")
         return HttpResponseRedirect(request.path)
 
+
 class ManageAppointmentTemplateView(ListView):
     template_name = "manage-appointments.html"
     model = Appointment
     context_object_name = "appointments"
     login_required = True
     paginate_by = 3
-
 
     def post(self, request):
         date = request.POST.get("date")
@@ -87,12 +88,11 @@ class ManageAppointmentTemplateView(ListView):
         messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {appointment.first_name}")
         return HttpResponseRedirect(request.path)
 
-
-    def get_context_data(self,*args, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         appointments = Appointment.objects.all()
-        context.update({   
-            "title":"Manage Appointments"
+        context.update({
+            "appointments": appointments,
+            "title": "Manage Appointments"
         })
         return context
-
