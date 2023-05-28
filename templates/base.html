@@ -19,10 +19,10 @@
 <body>
 
   <div class="header" style="
-background: rgb(150, 139, 74) url('../static/media/doc1.png') no-repeat fixed right"
-{% if "" in request.path %}
-  max-height:300px!important;min-height:300px!important;
-  {% endif %}>
+        background: rgb(150, 139, 74) url('../static/media/doc1.png') no-repeat fixed right
+        {% if 'appointment' in request.path %}
+        max-height:300px!important;min-height:300px!important;
+        {% endif %}">
     
     <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
         <div class="container"><a class="navbar-brand" href="{% url 'home' %}">Family Doctor X</a>

@@ -8,7 +8,7 @@
                 <p> At our Medical Center
                     we combine world class medicine
                     with compassionate care. </p>
-                    <a href="" class="btn btn-light btn-lg action-button" type="button">Book an appointment</a>
+                    <a href="{% url 'appointment' %}" class="btn btn-light btn-lg action-button" type="button">Book an appointment</a>
             </div>
 
         </div>
@@ -31,7 +31,7 @@
 
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'img/team1.jpg' %}" alt="" class=" mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/koala.png' %}" alt="" class=" mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                     <h5 class="mb-0">Dr Sai</h5>
                     <span class="small text-uppercase text-muted">Consultant anesthesiologist</span>
                 </div>
@@ -39,7 +39,7 @@
 
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'img/team2.jpg' %}" alt="" class=" mh-100 rounded-circle mb-3 img-thumbnail shadow-sm">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/cow.png' %}" alt="" class=" mh-100 rounded-circle mb-3 img-thumbnail shadow-sm">
                     <h5 class="mb-0">Dr Samuel </h5>
                     <span class="small text-uppercase text-muted">Consultant cardiothoracic</span>
                 </div>
@@ -47,7 +47,7 @@
 
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'img/team3.jpg' %}" alt="" class=" mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/shark.png' %}" alt="" class=" mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                     <h5 class="mb-0">Dr Sarra</h5>
                     <span class="small text-uppercase text-muted">Consultant dermatologist</span>
                 </div>
@@ -55,7 +55,7 @@
 
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'img/team4.png' %}" alt="" class=" mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/monkey.png' %}" alt="" class=" mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                     <h5 class="mb-0">DR John</h5>
                     <span class="small text-uppercase text-muted">Consultant Obstetrician</span>
                 </div>
@@ -78,7 +78,7 @@
       <!-- Team Member 1 -->
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-0 shadow">
-          <img src="{% static 'img/service1.jpg' %}" class="card-img-top" alt="...">
+          <img src="{% static 'media/panda.png' %}" class="card-img-top" alt="...">
           <div class="card-body text-center">
             <h5 class="card-title mb-0">Primary Care</h5>
             <div class="card-text text-black-50">Your personalized medical professionals.</div>
@@ -88,7 +88,7 @@
       <!-- Team Member 2 -->
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-0 shadow">
-          <img src="{% static 'img/service2.jpg' %}" class="card-img-top" alt="...">
+          <img src="{% static 'media/fox.png' %}" class="card-img-top" alt="...">
           <div class="card-body text-center">
             <h5 class="card-title mb-0">Dermatology</h5>
             <div class="card-text text-black-50">Your skin care made easy.</div>
@@ -98,7 +98,7 @@
       <!-- Team Member 3 -->
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-0 shadow">
-          <img src="{% static 'img/service3.jpg' %}" class="card-img-top" alt="...">
+          <img src="{% static 'media/pig.png' %}" class="card-img-top" alt="...">
           <div class="card-body text-center">
             <h5 class="card-title mb-0">Team Member</h5>
             <div class="card-text text-black-50">Web Developer</div>
@@ -108,7 +108,7 @@
       <!-- Team Member 4 -->
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-0 shadow">
-          <img src="{% static '' %}" class="card-img-top" alt="...">
+          <img src="{% static 'media/ghost.png' %}" class="card-img-top" alt="...">
           <div class="card-body text-center">
             <h5 class="card-title mb-0">PrEP Therapy</h5>
             <div class="card-text text-black-50">Stay safe if you are at high exposure of HIV.</div>
@@ -133,17 +133,17 @@
         <!-- Wrapper for carousel items -->
         <div class="carousel-inner">		
             <div class="carousel-item active">
-                <div class="img-box"><img src="{% static 'img/patient1.jpg' %}" alt=""></div>
+                <div class="img-box"><img src="{% static 'media/bear.png' %}" alt=""></div>
                 <p class="testimonial">Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum.</p>
                 <p class="overview">Michael Holz</p>
             </div>
             <div class="carousel-item">
-                <div class="img-box"><img src="{% static 'img/patient2.jpg' %}" alt=""></div>
+                <div class="img-box"><img src="{% static 'media/fox.png' %}" alt=""></div>
                 <p class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Vestibulum idac nisl bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
                 <p class="overview">Antonio Moreno</p>
             </div>
             <div class="carousel-item">
-                <div class="img-box"><img src="{% static 'img/patient3.jpg' %}" alt=""></div>
+                <div class="img-box"><img src="{% static 'media/koala.png' %}" alt=""></div>
                 <p class="testimonial">Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Utmtc tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio. Phasellus auctor velit.</p>
                 <p class="overview">Paula Wilson</p>
                 
