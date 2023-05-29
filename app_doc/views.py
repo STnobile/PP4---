@@ -92,7 +92,6 @@ class ManageAppointmentTemplateView(ListView):
         context = super().get_context_data(*args, **kwargs)
         appointments = Appointment.objects.all()
         context.update({
-            "appointments": appointments,
             "title": "Manage Appointments"
         })
         return context

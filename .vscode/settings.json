@@ -35,8 +35,12 @@
       "herokuapp",
       "navcol",
       "Norrlandsgatan",
+      "responsivity",
       "Sarra",
       "Vismara",
       "wsgi"
-   ]
+   ],
+   "[python]": {
+      "editor.defaultFormatter": "ms-python.python"
+   }
 }
