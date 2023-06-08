@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------------------HEADER*/
 
 .header {
-  background: rgb(177, 177, 177) url("media/doc1.png") no-repeat fixed center; 
+  background: rgb(177, 177, 177) url("media/subject.png") no-repeat fixed center; 
   min-height: 1000px;
   font-family:'Source Sans Pro', sans-serif;
 }
@@ -205,7 +205,7 @@
   border:1px solid #444;
   background-color:#aaa;
   overflow:hidden;
-  background: url(../media/doc1.png);
+  background: url(../media/subject.png);
   background-size:cover;
   background-position:center;
 }
@@ -386,7 +386,7 @@
 
 /* -------------------------------------------------------------------- Responsive */
 @media (min-width: 768px) {
-    .nav-custom-left {
+  .nav-custom-left {
     margin-left: 5%;
   }
   .navbar-nav>li>a {
