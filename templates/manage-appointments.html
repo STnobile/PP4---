@@ -46,12 +46,17 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <input type="date" name="date" class="form-control mb-2" 
-                                    placeholder="dd-mm-yyyy" value=""
+                                    placeholder="dd-mm-yyyy" value="{{app.sent_date}}"
                                     min="1997-01-01" max="2030-12-31">
-                                    <button type="button" class="btn btn-outline-success">Edit</button>
-                                    <button type="button" class="btn btn-outline-danger">Cancel</button>
-                                    <input hidden="true" name="appointment-id" value="{{app.id}}">
+                                {% if user.is_superuser %}
                                 <input class="btn-block btn-primary form-control" type="submit" value="Accept">
+                                {% else %}
+                                    <a href="{% url 'appointment_delete' app.id %}">delete</a>    
+                                    <!-- <button type="button" class="btn btn-outline-success">Edit</button>
+                                    <button type="button" class="btn btn-outline-danger">Cancel</button>
+                                    <input hidden="true" name="appointment-id" value="{{app.id}}"> -->
+                                
+                                {% endif %}
                             </div>
                             </form>
                             {% endif %}

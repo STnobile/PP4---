@@ -1,5 +1,7 @@
 from django.db import models
 from django.http import request
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 
 class Appointment(models.Model):
@@ -17,3 +19,10 @@ class Appointment(models.Model):
 
     class Meta:
         ordering = ["-sent_date"]
+
+
+#class Appointment(DeleteView):
+#    model = models
+#    success_url = "/"
+
+#   template_name = 'templates/.manage-appointments.html'
