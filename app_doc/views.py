@@ -1,3 +1,5 @@
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -19,15 +21,6 @@ class HomeTemplateView(TemplateView):
         name = request.POST.get("name")
         email = request.POST.get("email")
         message = request.POST.get("message")
-
-        email = EmailMessage(
-            subject=f"{name} from doctor family.",
-            body=message,
-            from_email=settings.EMAIL_HOST_USER,
-            to=[settings.EMAIL_HOST_USER],
-            reply_to=[email]
-        )
-        email.send()
         return HttpResponse("Email sent successfully!")
 
 
@@ -51,7 +44,8 @@ class AppointmentTemplateView(TemplateView):
 
         appointment.save()
 
-        messages.add_message(request, messages.SUCCESS, f"Thanks {fname} for making an appointment, we will email you ASAP!")
+        messages.add_message(request, messages.SUCCESS,
+                             f"Thanks {fname} for making an appointment, we will email you ASAP!")
         return HttpResponseRedirect(request.path)
 
 
@@ -62,31 +56,22 @@ class ManageAppointmentTemplateView(ListView):
     login_required = True
     paginate_by = 3
 
-    # def post(self, request):
-    #     date = request.POST.get("date")
-    #     appointment_id = request.POST.get("appointment-id")
-    #     appointment = Appointment.objects.get(id=appointment_id)
-    #     appointment.accepted = False
-    #     appointment.accepted_date = datetime.datetime.now()
-    #     appointment.save()
+    def post(self, request):
+        date = request.POST.get("date")
+        appointment_id = request.POST.get("appointment-id")
+        appointment = Appointment.objects.get(id=appointment_id)
+        appointment.accepted = True
+        appointment.accepted_date = datetime.datetime.now()
+        appointment.save()
 
-    #     data = {
-    #         "fname": appointment.first_name,
-    #         "date": date,
-    #     }
+        data = {
+            "fname": appointment.first_name,
+            "date": date,
+        }
 
-    #     message = get_template('email.html').render(data)
-    #     email = EmailMessage(
-    #         "About your appointment",
-    #         message,
-    #         settings.EMAIL_HOST_USER,
-    #         [appointment.email],
-    #     )
-    #     email.content_subtype = "html"
-    #     email.send()
-
-    #     messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {appointment.first_name}")
-    #     return HttpResponseRedirect(request.path)
+        messages.add_message(request, messages.SUCCESS,
+                             f"You accepted the appointment of {appointment.first_name}")
+        return HttpResponseRedirect(request.path)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -101,49 +86,14 @@ class ManageAppointmentTemplateView(ListView):
         return context
 
 
-
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-
-
-# class BookView(DetailView):
-#     model = Book
-
-# class BookCreate(CreateView):
-#     model = Book
-#     fields = ['name', 'pages']
-#     success_url = reverse_lazy('book_list')
-
 class AppointmentReschedule(UpdateView):
+    template_name = "form.html"
     model = Appointment
-    fields = ['name', 'pages']
+    fields = ['accepted_date', 'accepted']
+    template_name_suffix = "_update_form"
+    context_object_name = "app"
+    login_required = True
     success_url = reverse_lazy('manage')
-
-    # def post(self, request):
-    #     date = request.POST.get("date")
-    #     appointment_id = request.POST.get("appointment-id")
-    #     appointment = Appointment.objects.get(id=appointment_id)
-    #     appointment.accepted = True
-    #     appointment.accepted_date = datetime.datetime.now()
-    #     appointment.save()
-
-    #     data = {
-    #         "fname": appointment.first_name,
-    #         "date": date,
-    #     }
-
-    #     message = get_template('email.html').render(data)
-    #     email = EmailMessage(
-    #         "About your appointment",
-    #         message,
-    #         settings.EMAIL_HOST_USER,
-    #         [appointment.email],
-    #     )
-    #     email.content_subtype = "html"
-    #     email.send()
-
-    #     messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {appointment.first_name}")
-    #     return HttpResponseRedirect(request.path)
 
 
 class AppointmentCancel(DeleteView):

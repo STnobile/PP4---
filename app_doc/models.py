@@ -19,10 +19,3 @@ class Appointment(models.Model):
 
     class Meta:
         ordering = ["-sent_date"]
-
-
-#class Appointment(DeleteView):
-#    model = models
-#    success_url = "/"
-
-#   template_name = 'templates/.manage-appointments.html'

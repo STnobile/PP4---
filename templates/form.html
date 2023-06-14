@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+
+    <div class="container mt-5">
+        <div class="col-11 text-center mt-4 mb-4">
+            <h3>
+                Reschedule Appointment
+            </h3>
+            <h4 class="lead">Choose another Date</h4>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card card-margin">
+                <div class="card-header no-border">
+                    <h5 class="card-title">{{app.first_name}} {{app.last_name}}</h5>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+                            <div class="widget-49-date-primary">
+                                <span class="widget-49-date-day">{{app.sent_date|date:"d"}}</span>
+                                <span class="widget-49-date-month">{{app.sent_date|date:"M"}}</span>
+                            </div>
+                            <div class="widget-49-meeting-info">
+                                <span class="widget-49-pro-title">{{app.email}}</span>
+                                <span class="widget-49-meeting-time">{{app.phone}}</span>
+                            </div>
+                        </div>
+                        <div class="widget-49-meeting-points">
+                            <span>{{app.request}}</span>
+                        </div>
+                        <form method="post">{% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value="Update">
+                    </div> 
+       
+                </div>
+
+            </div>
+
+           
+        </div>
+        
+        
+    </div>
+
+</div>
+
+{% endblock%}

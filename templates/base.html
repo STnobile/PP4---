@@ -27,10 +27,18 @@
     {% endif %}
     {% if 'logout' in request.path %}
     max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
+    {% endif %}
+    {% if 'edit' in request.path %}
+    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
+    {% endif %}
+    {% if 'delete' in request.path %}
+    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
     {% endif %}">
     
+
+    
     <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-        <div class="container"><a class="navbar-brand" href="{% url 'home' %}">Family Doctor X</a>
+        <div class="container"><a class="navbar-brand" href="{% url 'home' %}">Vismara HealthCare</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="navbar-toggler-icon"></span>
@@ -66,25 +74,9 @@
                  <li>
                     <div class="btn-group dropright"> 
                   <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i>
                    </button>
                     <div class="dropdown-menu" style="border-radius: 25px;">
-                        <!--<form class="px-4 py-3 login" method="POST" action="{% url 'account_login' %}">
-                          <div class="form-group">
-                            <label for="exampleDropdownFormEmail1">UserName</label>
-                            <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Insert UserName">
-                         </div>
-                          <div class="form-group">
-                           <label for="exampleDropdownFormPassword1">Password</label>
-                           <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                         </div>
-                         <div class="form-group">
-                           <div class="form-check">
-                              <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                              <label class="form-check-label" for="dropdownCheck">
-                               Remember me
-                              </label>
-                           </div>
-                         </div></form>-->
                           <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_login' %}">Log In</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_signup' %}">New around here? Sign up</a>
