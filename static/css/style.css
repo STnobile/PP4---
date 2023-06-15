@@ -466,10 +466,10 @@
   textarea,
   button {
       padding: 8px 15px;
-      border-radius: 5px !important;
+      border-radius: 30px !important;
       margin: 5px 0px;
       box-sizing: border-box;
-      border: 1px solid #468910;
+      border: 1px solid rgba(0,123,255,.5);
       font-size: 18px !important;
       font-weight: 300
   }
