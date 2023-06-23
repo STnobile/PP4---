@@ -344,6 +344,13 @@
   background-color: #ededed;
 }
 
+.map{
+  width : 100%;
+  height : 350px;
+}
+
+
+
 .title-box .border,.btn-primary,.back-to-top,
 .logo i,.question-q-box,.social-circle li a:hover {
   background-color: rgb(255 0 177 / 53%) !important;
@@ -413,6 +420,14 @@
   }
   .footer h5 {
     margin-top: 30px;
+  }
+  
+}
+
+@media only screen and (min-width: 300px) and (max-width: 1200px){
+  .map {
+    width : 100%;
+    height : 300px;
   }
 }
 

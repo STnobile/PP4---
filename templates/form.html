@@ -2,7 +2,6 @@
 {% block content %}
 
 <div class="row">
-
     <div class="container mt-5">
         <div class="col-11 text-center mt-4 mb-4">
             <h3>
@@ -10,7 +9,6 @@
             </h3>
             <h4 class="lead">Choose another Date</h4>
         </div>
-        
         <div class="col-lg-4">
             <div class="card card-margin">
                 <div class="card-header no-border">
@@ -31,21 +29,35 @@
                         <div class="widget-49-meeting-points">
                             <span>{{app.request}}</span>
                         </div>
-                        <form method="post">{% csrf_token %}
-                            {{ form.as_p }}
-                            <input type="submit" value="Update">
-                    </div> 
-       
+                        {% if not app.rescheduled %}
+                        <form method="POST" action="{% url 'appointment_confirm' app.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="hidden" name="appointment-id" value="{{ app.id }}" />
+                                <input type="date" name="date" class="form-control mb-2" placeholder="dd-mm-yyyy"
+                                    value="{{ app.sent_date }}" min="1997-01-01" max="2030-12-31">
+                                <input class="btn-block btn-primary form-control" type="submit" value="Confirm">
+                            </div>
+                        </form>
+                        {% elif app.confirmed %}
+                        <p>Appointment confirmed. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
+                        <a class="btn-block btn-primary form-control"
+                            href="{% url 'appointment_delete' app.id %}">Delete</a>
+                        {% else %}
+                        <p>Appointment rescheduled. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
+                        <p>Awaiting confirmation from admin.</p>
+                        {% endif %}
+
+                    </div>
                 </div>
-
             </div>
-
-           
         </div>
-        
-        
+        {% endfor %}
+    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-</div>
-
-{% endblock%}
+    {% endblock %}

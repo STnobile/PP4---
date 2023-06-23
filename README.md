@@ -69,3 +69,33 @@ The patient will be able to insert some personal date such as:
 * A message that explain his case.
 
 Once the patient will sent the request it will show on the Admin notification that will confirm the appointment and set a date.
+
+As displayed in the picture below.
+
+![devises responsive](/static/media/admin-accept.png)
+
+
+
+# User features
+![devises responsive](/static/media/user-manage.png)
+
+The user after have created his account and booked an appointment.
+Will be able to manage it as illustrated on the picture above.
+
+He will able to reschedule or delete his appointment.
+
+
+Also the user is able to communicate with the admin through emails that he can find on the homepage.
+
+
+
+# Feature and Implementation 
+* A System of Chat bot, so the user can requests some answer on generic issues, such as:
+    * Bookings
+    * General Healthcare advice
+    * Request a special service due his condition.
+
+* Have a medical journal so the doctors will have a record of his patients. 
+
+* FAQ'S section.
+

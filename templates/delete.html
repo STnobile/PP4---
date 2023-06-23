@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="row">
+    <div class="container mt-5">
+        <div class="col-11 text-center mt-4 mb-4">
+            <form method="post">{% csrf_token %}
 
-<form method="post" >{% csrf_token %}
+                <p>Are you sure you want to cancel your booking?</p>
+                <input type="submit" value="Confirm" class="btn-block btn-primary form-control">
+            </form>
+        </div>
+    </div>
+</div>
 
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-            <input type="submit" value="Confirm">
- </form>
 
-
-
- {% endblock content %}
+{% endblock content %}
