@@ -62,7 +62,7 @@ class ManageAppointmentTemplateView(ListView):
         appointment_id = request.POST.get("appointment-id")
         appointment = Appointment.objects.get(id=appointment_id)
         appointment.accepted = True
-        appointment.accepted_date = datetime.datetime.now()
+        appointment.accepted_date = date
         appointment.save()
 
         data = {
@@ -95,14 +95,15 @@ class AppointmentReschedule(UpdateView):
     login_required = True
     success_url = reverse_lazy('manage')
 
-
     def form_valid(self, form):
         appointment = form.save(commit=False)
         if appointment.rescheduled:
             messages.add_message(self.request, messages.ERROR, "Appointment already rescheduled.")
             return HttpResponseRedirect(self.success_url)
         appointment.rescheduled = True
+        appointment.reschedule_count += 1  # Increment the reschedule count
         return super().form_valid(form)
+
 
 
 class AppointmentConfirm(UpdateView):

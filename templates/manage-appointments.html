@@ -19,58 +19,78 @@
     </div>
     <div class="row">
         {% for app in appointments %}
-    <div class="col-lg-4">
-        <div class="card card-margin">
-            <div class="card-header no-border">
-                <h5 class="card-title">{{ app.first_name }} {{ app.last_name }}</h5>
-            </div>
-            <div class="card-body pt-0">
-                <div class="widget-49">
-                    <div class="widget-49-title-wrapper">
-                        <div class="widget-49-date-primary">
-                            <span class="widget-49-date-day">{{ app.accepted_date|date:"d" }}</span>
-                            <span class="widget-49-date-month">{{ app.accepted_date|date:"M" }}</span>
-                        </div>
-                        <div class="widget-49-meeting-info">
-                            <span class="widget-49-pro-title">{{ app.email }}</span>
-                            <span class="widget-49-meeting-time">{{ app.phone }}</span>
-                        </div>
-                    </div>
-                    <div class="widget-49-meeting-points">
-                        <span>{{ app.request }}</span>
-                    </div>
-                    
-                    <hr class="w-100">
-                    <form method="POST" action="{% url 'manage' %}">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="hidden" name="appointment-id" value="{{ app.id }}" />
-                            {% if not app.accepted and request.user.is_superuser %}
-                                <input type="date" name="date" class="form-control mb-2" placeholder="dd-mm-yyyy" value="{{ app.sent_date }}"
-                                    min="1997-01-01" max="2030-12-31" required>
-                                <input class="btn-block btn-primary form-control" type="submit" value="Accept">
-                            {% elif app.accepted and not app.rescheduled %}
-                                <p>Appointment booked on {{ app.sent_date|date:"d-m-Y" }}.</p>
-                                <a class="btn-block btn-primary form-control" href="{% url 'appointment_edit' app.id %}">Reschedule</a>
-                                <a class="btn-block btn-primary form-control" href="{% url 'appointment_delete' app.id %}">Delete</a>
-                            {% elif app.rescheduled %}
-                                {% if app.confirmed %}
-                                    <p>Appointment confirmed. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
-                                    <a class="btn-block btn-primary form-control" href="{% url 'appointment_delete' app.id %}">Delete</a>
+        <div class="col-lg-4">
+            <div class="card card-margin">
+                <div class="card-header no-border">
+                    <h5 class="card-title">{{ app.first_name }} {{ app.last_name }}</h5>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+                            <div class="widget-49-date-primary">
+                                {% if app.accepted_date %}
+                                <span class="widget-49-date-day">{{ app.accepted_date|date:"d" }}</span>
+                                <span class="widget-49-date-month">{{ app.accepted_date|date:"M" }}</span>
                                 {% else %}
-                                    <p>Appointment rescheduled. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
-                                    <p>Awaiting confirmation from admin.</p>
-                                    <input class="btn-block btn-primary form-control" type="submit" value="Confirm">
-                                    <a class="btn-block btn-primary form-control" href="{% url 'appointment_delete' app.id %}">Delete</a>
+                                <span class="widget-49-date-day">{{ app.sent_date|date:"d" }}</span>
+                                <span class="widget-49-date-month">{{ app.sent_date|date:"M" }}</span>
                                 {% endif %}
-                            {% endif %}
+                            </div>
+                            <div class="widget-49-meeting-info">
+                                <span class="widget-49-pro-title">{{ app.email }}</span>
+                                <span class="widget-49-meeting-time">{{ app.phone }}</span>
+                            </div>
                         </div>
-                    </form>
+                        <div class="widget-49-meeting-points">
+                            <span>{{ app.request }}</span>
+                        </div>
+
+                        <hr class="w-100">
+                        <form method="POST" action="{% url 'manage' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="hidden" name="appointment-id" value="{{ app.id }}" />
+                                {% if not app.accepted and request.user.is_superuser %}
+                                {{ app.accept_date|date:"d-m-Y" }}
+                                <!-- Accept form for admin -->
+                                <input type="date" name="date" class="form-control mb-2" placeholder="dd-mm-yyyy"
+                                    value="{{ app.sent_date }}" min="1997-01-01" max="2030-12-31" required>
+                                <input class="btn-block btn-primary form-control" type="submit" value="Accept">
+                                {% elif app.accepted and not app.rescheduled %}
+                                <!-- Reschedule and delete buttons for user (non-admin) -->
+                                <p>Appointment booked on {% if app.accepted_date %}{{ app.accepted_date|date:"d-m-Y" }}{% else %}{{ app.sent_date|date:"d-m-Y" }}{% endif %}.</p>
+                                <a class="btn-block btn-primary form-control"
+                                    href="{% url 'appointment_reschedule' app.id %}">Reschedule</a>
+                                <a class="btn-block btn-primary form-control"
+                                    href="{% url 'appointment_delete' app.id %}">Delete</a>
+                                {% elif app.rescheduled %}
+                                {% if request.user.is_superuser and app.confirmed %}
+                                <!-- Confirmed and delete button for admin -->
+                                <p>Appointment confirmed. New date: {% if app.accepted_date %}{{ app.accepted_date|date:"d-m-Y" }}{% else %}{{ app.sent_date|date:"d-m-Y" }}{% endif %}</p>
+                                <a class="btn-block btn-primary form-control"
+                                    href="{% url 'appointment_delete' app.id %}">Delete</a>
+                                {% elif request.user.is_superuser %}
+                                <!-- Rescheduled and confirm buttons for admin -->
+                                <p>Appointment rescheduled. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
+                                <p>Appointment confirmed.</p>
+                                <form method="POST" action="{% url 'appointment_confirm' app.id %}">
+                                    {% csrf_token %}
+                                </form>
+                                <a class="btn-block btn-primary form-control"
+                                    href="{% url 'appointment_delete' app.id %}">Delete</a>
+                                {% else %}
+                                <!-- Rescheduled message for non-admin users -->
+                                <p>Appointment rescheduled. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endfor %}
+        {% endfor %}
     </div>
 
 
@@ -93,4 +113,4 @@
     </div>
     {% endif %}
 
-{% endblock content %}
+    {% endblock content %}
