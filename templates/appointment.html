@@ -52,7 +52,12 @@
                         </div>
 
                         <div class="row justify-content-between text-left">
-                            <div class="form-group col-12 flex-column d-flex"> 
+                            <div class="form-group col-sm-6 flex-column d-flex"> 
+                                <label class="form-control-label px-3">Subject:<span class="text-danger"> *</span></label> 
+                                <input  required type="text" id="subject" name="subject" placeholder="Write here the Object of your issue" onblur="validate(5)"> 
+                            </div>
+
+                            <div class="form-group col-12 flex-column d-flex">
                                 <label class="form-control-label px-3">Your request<span class="text-danger"> *</span></label> 
                                 <textarea type="text" id="ans" name="request" placeholder="" onblur="validate(6)"></textarea> 
                             </div>

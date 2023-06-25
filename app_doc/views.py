@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -33,6 +33,7 @@ class AppointmentTemplateView(TemplateView):
         lname = request.POST.get("lname")
         email = request.POST.get("email")
         mobile = request.POST.get("mobile")
+        subject = request.POST.get("subject")
         message = request.POST.get("request")
 
         appointment = Appointment.objects.create(
@@ -40,6 +41,7 @@ class AppointmentTemplateView(TemplateView):
             last_name=lname,
             email=email,
             phone=mobile,
+            subject=subject,
             request=message,
         )
 
@@ -89,35 +91,24 @@ class ManageAppointmentTemplateView(ListView):
 class AppointmentReschedule(UpdateView):
     template_name = "form.html"
     model = Appointment
-    fields = ['accepted', 'rescheduled']
-    template_name_suffix = "manage"
+    fields = ['accepted', 'reschedule_date']
+    # template_name_suffix = "manage"
     context_object_name = "app"
     login_required = True
-    success_url = reverse_lazy('manage')
+    # success_url = reverse_lazy('manage')
 
-    def form_valid(self, form):
-        appointment = form.save(commit=False)
-        if appointment.rescheduled:
-            messages.add_message(self.request, messages.ERROR, "Appointment already rescheduled.")
-            return HttpResponseRedirect(self.success_url)
-        appointment.rescheduled = True
-        appointment.reschedule_count += 1  # Increment the reschedule count
-        return super().form_valid(form)
+    def post(self, request, pk):
+        date = request.POST.get("date")
+        appointment_id = request.POST.get("appointment-id")
+        appointment = Appointment.objects.get(id=pk)
+        appointment.reschedule_date = date
+        appointment.accepted = False
+        appointment.accepted_date = None
+        appointment.save()
 
+        messages.add_message(request, messages.SUCCESS, f"Request sent for reschedule: {appointment.first_name}")
 
-
-class AppointmentConfirm(UpdateView):
-    model = Appointment
-    fields = ['accepted']
-    template_name_suffix = "confirm"
-    success_url = reverse_lazy('manage')
-    context_object_name = "app"
-    login_required = True
-
-    def form_valid(self, form):
-        appointment = form.save(commit=False)
-        appointment.accepted_date = datetime.datetime.now()
-        return super().form_valid(form)
+        return redirect(reverse("manage"))
 
 
 class AppointmentDelete(DeleteView):

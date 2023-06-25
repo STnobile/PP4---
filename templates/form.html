@@ -10,57 +10,47 @@
             </h3>
             <h4 class="lead">Choose another Date</h4>
         </div>
-        <div class="col-lg-4">
-            <div class="card card-margin">
-                <div class="card-header no-border">
-                    <h5 class="card-title">{{ app.first_name }} {{ app.last_name }}</h5>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="widget-49">
-                        <div class="widget-49-date-primary">
-                            {% if app.accepted_date %}
-                            <span class="widget-49-date-day">{{ app.accepted_date|date:"d" }}</span>
-                            <span class="widget-49-date-month">{{ app.accepted_date|date:"M" }}</span>
-                            {% else %}
-                            <span class="widget-49-date-day">{{ app.sent_date|date:"d" }}</span>
-                            <span class="widget-49-date-month">{{ app.sent_date|date:"M" }}</span>
-                            {% endif %}
-                        </div>
-                            <div class="widget-49-meeting-info">
-                                <span class="widget-49-pro-title">{{ app.email }}</span>
-                                <span class="widget-49-meeting-time">{{ app.phone }}</span>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card card-margin">
+                    <div class="card-header no-border">
+                        <h5 class="card-title">{{ app.first_name }} {{ app.last_name }}</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="widget-49">
+                            <div class="widget-49-title-wrapper">
+                                <div class="widget-49-date-primary">
+                                    <span class="widget-49-date-day">{{ app.accepted_date|date:"d" }}</span>
+                                    <span class="widget-49-date-month">{{ app.accepted_date|date:"M" }}</span>
+                                </div>
+                                <div class="widget-49-meeting-info">
+                                    <span class="widget-49-pro-title">{{ app.email }}</span>
+                                    <span class="widget-49-meeting-time">{{ app.phone }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="widget-49-meeting-points">
-                            <span>{{ app.request }}</span>
-                        </div>
-                        {% if not app.rescheduled %}
+                            <div class="widget-49-meeting-points">
+                                <span>{{ app.request }}</span>
+                            </div>
+
+                            {% if not app.reschedule_date %}
+                            <hr>
+                            <p> Appointment Date: {{ app.accepted_date|date:"d-m-Y" }} Confirmed.</p>
                             <form method="POST" action="{% url 'appointment_reschedule' app.id %}">
                                 {% csrf_token %}
                                 <div class="form-group">
+                                    <p>Choose a New Date:</p>
                                     <input type="hidden" name="appointment-id" value="{{ app.id }}" />
-                                    <input type="date" name="date" class="form-control mb-2" placeholder="dd-mm-yyyy"
-                                        value="{{ app.sent_date }}" min="1997-01-01" max="2030-12-31">
+                                    <input type="date" name="date" class="form-control mb-2" placeholder="New date"
+                                        value="{{ app.accepted_date }}" min="{{ app.accepted_date }}" max="2025-12-31">
                                     <input class="btn-block btn-primary form-control" type="submit" value="Reschedule">
+                                    
                                 </div>
-                           
-                        {% elif app.confirmed %}
-                            <p>Appointment confirmed. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
-                            <a class="btn-block btn-primary form-control"
-                                href="{% url 'appointment_delete' app.id %}">Delete</a>
-                        {% else %}
-                            <p>Appointment rescheduled. New date: {{ app.sent_date|date:"d-m-Y" }}</p>
-                            <p>Awaiting confirmation from admin.</p>
-                            <a class="btn-block btn-primary form-control"
-                                href="{% url 'appointment_delete' app.id %}">Delete</a>
                             </form>
-                        {% endif %}
-                     
+                            {% endif %}
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-{% endblock %}
+ {% endblock %}

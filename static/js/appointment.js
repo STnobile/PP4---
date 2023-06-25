@@ -3,7 +3,7 @@ function validate(val) {
     v2 = document.getElementById("lname");
     v3 = document.getElementById("email");
     v4 = document.getElementById("mob");
-    v5 = document.getElementById("job");
+    v5 = document.getElementById("subject");
     v6 = document.getElementById("ans");
 
     flag1 = true;
