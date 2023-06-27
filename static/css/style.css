@@ -353,7 +353,7 @@
 
 .title-box .border,.btn-primary,.back-to-top,
 .logo i,.question-q-box,.social-circle li a:hover {
-  background-color: rgb(255 0 177 / 53%) !important;
+  background-color: rgba(225, 116, 192, 0.53) !important;
 }
 .title-box .title-alt,.text-colored,.footer a:hover,
 .navbar-custom .navbar-nav li a:hover,
@@ -381,8 +381,8 @@
 .open>.dropdown-toggle.btn-primary.focus, 
 .open>.dropdown-toggle.btn-primary:focus, 
 .open>.dropdown-toggle.btn-primary:hover {
-  background-color: rgb(255 0 177 / 53%) !important;
-  border: 1px solid rgba(156, 48, 123, 0.53) !important;
+  background-color: rgba(237, 13, 170, 0.53) !important;
+  border: 1px solid rgba(154, 77, 131, 0.53) !important;
 }
 
 .btn-shadow.btn-primary {
@@ -406,11 +406,11 @@
   }
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .navbar-custom {
         -moz-box-shadow: 0 2px 2px rgba(0,0,0,.1);
-    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.1);
-    box-shadow: 0 2px 2px rgba(0,0,0,.1);
+        -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.1);
+         box-shadow: 0 2px 2px rgba(0,0,0,.1);
   }
   .screen-space {
     margin: 0px auto 50px auto;
@@ -446,7 +446,7 @@
 @media only screen and (min-width: 767px) and (max-width: 991px){
   
 }
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
   .blog-wrapper .blog-item {
     width: 100%;
   }

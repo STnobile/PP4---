@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<div class="row">
-    <div class="container mt-5">
-        <div class="col-11 text-center mt-4 mb-4">
-            <form method="post">{% csrf_token %}
-
-                <p>Are you sure you want to cancel your booking?</p>
-                <input type="submit" value="Confirm" class="btn-block btn-primary form-control">
-            </form>
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <h3>
+                Cancel Your Appointment!
+            </h3>
+            <p class="blue-text">Are you sure you want to cancel your booking?</p>
+            <div class="card">
+                <div class="row">
+                    <div class="container mt-5">
+                        <div class="col-11 text-center mt-4 mb-4">
+                            <form method="post">{% csrf_token %}
+                                 <p>Click here to Cancel your appointment</p>
+                                <input type="submit" value="Confirm" class="btn-block btn-primary form-control">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
+      
 {% endblock content %}
