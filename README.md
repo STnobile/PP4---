@@ -1,7 +1,12 @@
 # App_Doc
 ## Project 4
 
-A health care website that comes with a simple appointment booking and notification system.
+"App_Doc" for a health care website with appointment booking and notification system features. Here's a summary of the main components and functionality described in the document:
+
+- HTML
+- CSS 
+- JS
+- PYTHON (DJANGO)
 
 ![devises responsive](/static/readme/amIresponsive.png)
 
@@ -68,8 +73,12 @@ Once the patient will sent the request it will show on the Admin notification th
 
 As displayed in the picture below.
 
-![devises responsive](/static/readme/admin-accept.png)
-
+![devises responsive](/static/readme/notification.png)
+# Admin Log in
+* UserName:
+    admin
+ * password:
+    CodeStart 
 # User features
 
 ![devises responsive](/static/readme/book_appoinmt.png)
@@ -98,6 +107,7 @@ through emails that he can find on the homepage.
 
 - Administrators can view and manage the appointments, including accepting or rescheduling appointments.
 In the following pic it will be illustrated the path of the admin from the accepting the user request to the reschedule date.
+
 ![devises responsive](/static/readme/admin_accepting_booking.png)
 ![devises responsive](/static/readme/admin_accepting_reschedule_date.png)
 
@@ -114,16 +124,30 @@ In the following pic it will be illustrated the path of the admin from the accep
 
 
 ## Validation 
+## HMTL
+- ![devises responsive](/static/readme/html_appiment_validation.png)
+- ![devises responsive](/static/readme/html_validation.png)
+
+## CSS
+- ![devises responsive](/static/readme/css_validator.png)
+
+
+## JS
+- ![devises responsive](/static/readme/js_validator.png)
 ![devises responsive](/static/readme/lighthouse.png)
 ![devises responsive](/static/readme/lighthouse_vali_appointment.png)
+![devises responsive](/static/readme/lighthouse_manage.png)
 
-## Installation
+## Installation and Usage
 
+ Instructions for cloning the repository, installing dependencies, running the development server, and accessing the application are provided.
+
+ Installation :
 1. Clone the repository: `git clone https://github.com/your/repo.git`
 2. Change to the project directory: `cd project-directory`
 3. Install dependencies: `pip install -r requirements.txt`
 
-## Usage
+Usage:
 
 1. Run the development server: `python manage.py runserver`
 2. Access the application in your web browser at `http://localhost:8000`
@@ -132,13 +156,34 @@ In the following pic it will be illustrated the path of the admin from the accep
 
 ## Configuration
 
-The project uses the following environment variables:
+The project uses environment variables for configuration, including a secret key and a database connection URL.
 
 - `SECRET_KEY`: Secret key for Django application
 - `DATABASE_URL`: Database connection URL
 
 Make sure to set up these environment variables before running the application.
 
+# Debug
+
+- I had some issues the different if else statements on the template.
+for example: on the manage-appointment.html line 74. I could not abe able to follow the logic that I wanted to use and the results was giving a loop between the reschedule appointment and the accepting and I wasn’t able to make it work.
+So instead to be able to reschedule the the date only once it was going infinite time. 
+I fixed the issue adding one more if else statements and I made the logic more simple that was before givin the user and the admin different inputs.
+![devises responsive](/static/readme/if_else_statement.png)
+
+- Another issue was also regarding an if else statement, this time was for the Notifications for the admin. I wasn’t able to separate the admin from the user.
+I fixed the bug adding 
+{% if request.user.is_authenticated and request.user.is_staff %}
+![devises responsive](/static/readme/if_else_statement_count.png)
+
+now all the bugs are fixed and working fine.
+
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+
+# Credits 
+- https://www.youtube.com/watch?v=YtzFtkV4TTM&t=30s
+- https://www.youtube.com/watch?v=-9dhCQ7FdD0&list=PL_6Ho1hjJirn8WbY4xfVUAlcn51E4cSbY
+- https://www.youtube.com/watch?v=rHZwE1AK1h8&t=1422s

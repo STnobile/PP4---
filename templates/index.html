@@ -8,7 +8,7 @@
                 <p> At our Medical Center
                     we combine world class medicine
                     with compassionate care. </p>
-                    <a href="{% url 'appointment' %}" class="btn btn-light btn-lg action-button" type="button">Book an appointment</a>
+                    <a href="{% url 'appointment' %}" class="btn btn-light btn-lg action-button">Book an appointment</a>
             </div>
 
         </div>
@@ -31,11 +31,12 @@
 
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/koala.png' %}" alt="Our dr beluga" class="mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                    <h5 class="mb-0">Dr. Beluga </h5>
-                    <span class="small text-uppercase text-muted">Consultant anesthesiologist</span>
-                </div>
-            </div><!-- End -->
+              <div class="bg-white rounded shadow-sm py-5 px-4">
+                  <img src="/static/media/koala.png" alt="Our dr beluga" class="mh-100 img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                  <h5 class="mb-0">Dr. Beluga</h5>
+                  <span class="small text-uppercase text-muted">Consultant anesthesiologist</span>
+              </div>
+          </div><!-- End -->
 
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-5">
@@ -196,7 +197,7 @@
   
           <!-- Contact form -->
           <div class="col-sm-6">
-            <form role="form" name="ajax-form" id="ajax-form" method="post" class="form-main" action="{% url 'home' %}">
+            <form name="ajax-form" id="ajax-form" method="post" class="form-main" action="{% url 'home' %}">
             {% csrf_token %}
             <!-- Form-name -->
               <div class="form-group">
@@ -230,9 +231,8 @@
   
         </div> <!-- end row -->
      </div>
-    </div>
+    
         
 </section>
-
 
 {% endblock content %}

@@ -52,6 +52,18 @@ class AppointmentTemplateView(TemplateView):
         return HttpResponseRedirect(request.path)
 
 
+class UserAppointmentsView(ListView):
+    template_name = "user_appointments.html"
+    model = Appointment
+    context_object_name = "appointments"
+    login_required = True
+    paginate_by = 3
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
+
+
 class ManageAppointmentTemplateView(ListView):
     template_name = "manage-appointments.html"
     model = Appointment
