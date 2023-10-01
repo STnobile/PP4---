@@ -4,19 +4,20 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Vismara Center</title>
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Vismara Center</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 </head>
 
 <body>
-  <div class="header" style="
-   {% if 'appointment' in request.path or 'manage' in request.path or 'login' in request.path or 'signup' in request.path or 'logout' in request.path or 'edit' in request.path or 'delete' in request.path %}
+    <div class="header" style="
+    {% if 'appointment' in request.path or 'manage' in request.path or 'login' in request.path or 'signup' in request.path or 'logout' in request.path or 'edit' in request.path or 'delete' in request.path %}
         background: rgba(133, 122, 47, 0.772);
     {% else %}
         background: rgba(133, 122, 47, 0.772) url('{% static 'readme/subject.png' %}') no-repeat fixed center;
@@ -28,124 +29,89 @@
         max-height: 250px;
         min-height: 250px;
     {% endif %}">
-    
-    <!---- <div class="header" style="
-  background: rgba(133, 122, 47, 0.772) url('../static/readme/subject.png') no-repeat fixed  center;
-    {% if 'appointment' in request.path %}
-    max-height:300px;min-height:300px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}
-    {% if 'manage' in request.path %}
-    max-height:300px;min-height:300px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}
-    {% if 'login' in request.path %}
-    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}
-    {% if 'signup' in request.path %}
-    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}
-    {% if 'logout' in request.path %}
-    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}
-    {% if 'edit' in request.path %}
-    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}
-    {% if 'delete' in request.path %}
-    max-height:250px;min-height:250px;background: rgba(133, 122, 47, 0.772)
-    {% endif %}">---->
-
-
-
-    <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-      <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">Vismara HealthCare</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-          <ul class="nav navbar-nav">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="#team">Our Team</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="#services">Services</a>
-            </li>
-
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="#reviews">Testimonial</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="#contact">Contact Us</a>
-            </li>
-            <!-- {% if request.user.is_authenticated and request.user.is_staff %}
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" href=" {% url 'manage' %}">Manage</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a href="{% url 'manage' %}" style="float: left;cursor:pointer;" aria-expanded="true"
-                title="You Have a New Appointments">
-                <i class="fa-regular fa-bell fa-xl" style="color: #0b070c;" style="font-size: 20px; float: left">
-                </i>
-              </a>
-              <span class="badge badge-danger">{{count}}</span>
-            </li>
-            {% endif %}-->
-            {% if request.user.is_authenticated %}
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="{% url 'manage' %}">Manage</a>
-            </li>
-            {% endif %}
-
-            {% if request.user.is_authenticated and request.user.is_staff %}
-            <li class="nav-item" role="presentation">
-              <a href="{% url 'manage' %}" style="float: left; cursor: pointer;" aria-expanded="true"
-                title="You Have a New Appointments">
-                <i class="fa-regular fa-bell fa-xl" style="color: #0b070c;"></i>
-              </a>
-              <span class="badge badge-danger">{{ count }}</span>
-            </li>
-            {% endif %}
-            <li>
-              <div class="btn-group dropright">
-                <button class="btn btn-sm dropdown-toggle" type="submit" id="dropdownMenuButton" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <i class="fa-solid fa-user"></i>
+        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">Vismara HealthCare</a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="dropdown-menu" style="border-radius: 25px;">
-                  {% if not request.user.is_authenticated %}
-                  <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_login' %}">Log In</a>
-                  {% endif %}
-                  {% if not request.user.is_authenticated %}
-                  <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_signup' %}">New around
-                    here? Sign up</a>
-                  {% endif %}
-                  <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_logout' %}">Log Out</a>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="#team">Our Team</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="#reviews">Testimonial</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="#contact">Contact Us</a>
+                        </li>
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="{% url 'manage' %}">Manage</a>
+                        </li>
+                        {% endif %}
+                        {% if request.user.is_authenticated and request.user.is_staff %}
+                        <li class="nav-item" role="presentation">
+                            <a href="{% url 'manage_staff' %}" style="float: left; cursor: pointer;" aria-expanded="true"
+                                title="Staff: You Have a New Appointment">
+                                <i class="fa-regular fa-bell fa-xl" style="color: #0b070c;"></i>
+                            </a>
+                            <span class="badge badge-danger">{{ staff_count }}</span>
+                        </li>
+                        {% endif %}
+                        {% if request.user.is_authenticated and not request.user.is_staff %}
+                        <li class="nav-item" role="presentation">
+                            <a href="{% url 'manage_user' %}" style="float: left; cursor: pointer;" aria-expanded="true"
+                                title="User: You Have a New Notification">
+                                <i class="fa-regular fa-bell fa-xl" style="color: #0b070c;"></i>
+                            </a>
+                            <span class="badge badge-danger">{{ user_count }}</span>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <div class="btn-group dropright">
+                                <button class="btn btn-sm dropdown-toggle" type="submit" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                                <div class="dropdown-menu" style="border-radius: 25px;">
+                                    {% if not request.user.is_authenticated %}
+                                    <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_login' %}">Log In</a>
+                                    {% endif %}
+                                    {% if not request.user.is_authenticated %}
+                                    <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_signup' %}">New around
+                                        here? Sign up</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" style="border-radius: 50px;" href="{% url 'account_logout' %}">Log Out</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+            </div>
+        </nav>
 
-    {% block cta %}{% endblock cta %}
-  </div>
+        {% block cta %}{% endblock cta %}
+    </div>
 
+    {% block content %}{% endblock content %}
 
-  {% block content %}{% endblock content %}
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-  <script src="{% static 'js/appointment.js' %}"></script>
-  <script src="https://kit.fontawesome.com/fe96350843.js" crossorigin="anonymous"></script>
-
+    <script src="{% static 'js/appointment.js' %}"></script>
+    <script src="https://kit.fontawesome.com/fe96350843.js" crossorigin="anonymous"></script>
 
 </body>
 

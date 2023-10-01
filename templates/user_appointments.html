@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Appointments</h2>
+
+    {% if user_appointments %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Subject</th>
+                <th>Request</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in user_appointments %}
+            <tr>
+                <td>{{ appointment.first_name }}</td>
+                <td>{{ appointment.last_name }}</td>
+                <td>{{ appointment.email }}</td>
+                <td>{{ appointment.phone }}</td>
+                <td>{{ appointment.subject }}</td>
+                <td>{{ appointment.request }}</td>
+                <td>
+                    {% if appointment.accepted %}
+                    Accepted on {{ appointment.accepted_date }}
+                    {% elif appointment.reschedule_date %}
+                    Rescheduled to {{ appointment.reschedule_date }}
+                    {% else %}
+                    Pending
+                    {% endif %}
+                </td>
+                <td>{{ appointment.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have no appointments scheduled.</p>
+    {% endif %}
+</div>
+{% endblock %}

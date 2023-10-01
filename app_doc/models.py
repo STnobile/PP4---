@@ -12,11 +12,10 @@ class Appointment(models.Model):
     subject = models.CharField(max_length=200, default="")
     request = models.TextField(blank=True)
     sent_date = models.DateField(auto_now_add=True)
-    # rescheduled = models.BooleanField(default=False)
     reschedule_date = models.DateField(null=True)
-    # reschedule_count = models.IntegerField(default=0)
     accepted = models.BooleanField(default=False)
     accepted_date = models.DateField(auto_now_add=False, null=True, blank=True)
+    is_seen = models.BooleanField(default=False)
 
     def __str__(self):
         return self.first_name
