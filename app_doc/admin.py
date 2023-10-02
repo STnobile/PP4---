@@ -2,4 +2,9 @@ from django.contrib import admin
 from .models import Appointment
 # Register your models here.
 
-admin.site.register(Appointment)
+
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'is_seen')
+
+
+admin.site.register(Appointment, AppointmentAdmin)
