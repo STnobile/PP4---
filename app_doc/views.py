@@ -35,8 +35,11 @@ class HomeTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(get_notification_counts(self.request.user))
+        counts, user_count_b = get_notification_counts(self.request.user)
+        context.update(counts)
+        context.update(user_count_b)
         print(context)
+        context['count'] = user_count_b.get('user_count', 0)
         return context
 
     def post(self, request):
@@ -126,8 +129,8 @@ class UserAppointmentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
        # If the user accessing this view is a regular user, mark all their accepted appointments as seen
-        accepted_appointments = Appointment.objects.filter(email=self.request.user.email, accepted=True, is_seen=False)
-        accepted_appointments.update(is_seen=True)
+        accepted_appointments = Appointment.objects.filter(email=self.request.user.email, accepted=True, user_is_seen=False)
+        accepted_appointments.update(user_is_seen=True)
         return Appointment.objects.filter(email=self.request.user.email)
 
 
@@ -179,19 +182,17 @@ class SendMessageView(View):
 
 
 def get_notification_counts(user):
-    counts = {'staff_count': 0, 'user_count': 0}
-    
-    # Check if the user is authenticated
+    counts = {'staff_count': 0}
+    user_count_b = {'user_count': 0}
     if not user.is_authenticated:
-        return counts
+        return counts, user_count_b
+    try:
+        if user.is_superuser:
+            counts['staff_count'] = Appointment.objects.filter(accepted=False, is_seen=False).count()
+        else:
+            user_count_value = Appointment.objects.filter(email=user.email, accepted=True, user_is_seen=False).count()
+            user_count_b['user_count'] = user_count_value
+    except Exception as e:
+        print(f"Error getting notification counts: {str(e)}")
     
-    # For admin
-    if user.is_superuser:
-        counts['staff_count'] = Appointment.objects.filter(accepted=False, is_seen=False).count()
-    
-    # For regular users
-    else:
-        counts['user_count'] = Appointment.objects.filter(email=user.email, accepted=True, is_seen=False).count()
-    
-    return counts
-
+    return counts, user_count_b
