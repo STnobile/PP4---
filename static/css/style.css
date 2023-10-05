@@ -321,6 +321,7 @@
   display: none;
   color: red;
 }
+
 #ajaxsuccess {
   font-size: 16px;
   width: 100%;
@@ -853,4 +854,22 @@
     z-index: 3;
     outline: 0;
     box-shadow: none
+}
+
+
+/*------------------------------------------------------------Message_form*/
+
+.form-errors {
+  list-style-type: none;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+.form-errors li {
+  margin-bottom: 5px;
+  font-weight: bold;
 }

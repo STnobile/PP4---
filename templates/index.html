@@ -215,35 +215,34 @@
           {% csrf_token %}
           <!-- Form-name -->
           <div class="form-group">
-            <label for="name2">Name</label>
-            <input class="form-control" id="name2" name="name" type="text" placeholder="name">
+            <label for="name2">Name:</label>
+            <input class="form-control" id="name2" name="name" type="text" placeholder="Full Name">
             <div class="error" id="err-name" style="display: none;">Please enter name</div>
           </div>
 
           <!-- Form-email -->
           <div class="form-group">
-            <label for="email2">Email</label>
-            <input class="form-control" id="email2" name="email" type="text" placeholder="email">
+            <label for="email2">Email:</label>
+            <input class="form-control" id="email2" name="email" type="text" placeholder="Email">
             <div class="error" id="err-emailvld" style="display: none;">E-mail format not valid</div>
           </div>
 
           <!-- Form-message -->
           <div class="form-group">
-            <label for="message2">Message</label>
+            <label for="message2">Message:</label>
             <textarea class="form-control" id="message2" name="message" rows="5"
-              placeholder="message">Message</textarea>
+              placeholder="message">We are here to help!</textarea>
             <div class="error" id="err-message" style="display: none;">Please enter message</div>
           </div> <!-- /col -->
 
           <!-- Display messages here -->
-          {% if messages %}
-          <div class="messages">
-            {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+          {% if form_errors %}
+          <ul class="form-errors">
+            {% for error in form_errors %}
+            <li>{{ error }}</li>
             {% endfor %}
-          </div>
+          </ul>
           {% endif %}
-
           <div class="row">
             <button type="submit" class="btn btn-primary btn-shadow btn-rounded w-md" id="send">Send</button>
           </div> <!-- /col -->

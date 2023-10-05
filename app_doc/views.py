@@ -16,6 +16,7 @@ from django.template.loader import render_to_string, get_template
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User, AnonymousUser
 import re
+from .models import ContactMessage
 
 
 def manage_staff_view(request):
@@ -34,41 +35,42 @@ def manage_staff_view(request):
 class HomeTemplateView(TemplateView):
     template_name = "index.html"
 
+    def validate_email(self, email):
+        email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        return re.match(email_regex, email)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         counts, user_count_b = get_notification_counts(self.request.user)
         context.update(counts)
         context.update(user_count_b)
-        print(context)
         context['count'] = user_count_b.get('user_count', 0)
+        context['form_errors'] = []
         return context
 
-    def validate_email(self, email):
-        email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        return re.match(email_regex, email)
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        form_errors = []
 
-    def post(self, request):
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-
-        # Validating name
         if not name or len(name) < 2:
-            messages.error(request, "Name must be at least 2 characters long.")
-            return redirect('home')  # Replace 'home' with the name of your home route
-
-        # Validating email
+            form_errors.append('Name must be at least 2 characters long.')
         if not email or not self.validate_email(email):
-            messages.error(request, "Please provide a valid email address.")
-            return redirect('home')  
-
-        # Validating message
+            form_errors.append('Please provide a valid email address.')
         if not message or len(message) < 10:
-            messages.error(request, "Message must be at least 10 characters long.")
-            return redirect('home')  
+            form_errors.append('Message must be at least 10 characters long.')
 
-        # if all validations pass, proceed with the original functionality
-        return HttpResponse("Email sent successfully!")
+        if form_errors:
+            # If form_errors is not empty, re-render the page with the error messages
+            context = self.get_context_data(**kwargs)
+            context['form_errors'] = form_errors
+            return render(request, self.template_name, context)
+        else:
+            # If form_errors is empty, meaning the form is valid, process the data and redirect
+            messages.success(request, 'Email sent successfully!')
+            # Email sending logic here
+            return redirect('home')
 
 
 class AppointmentTemplateView(TemplateView):
@@ -95,7 +97,7 @@ class AppointmentTemplateView(TemplateView):
 
         messages.add_message(request, messages.SUCCESS,
                              f"Thanks {fname} for making an appointment, we will email you ASAP!")
-        
+
         if request.user is not AnonymousUser:
             # Notification.objects.create(user=request.user, appointment=Appointment, message=f"Thanks {fname} for making an appointment, we will email you ASAP!")
             return redirect(reverse("manage"))
@@ -129,7 +131,8 @@ class ManageAppointmentTemplateView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # If the user accessing this view is a superuser, then mark all unaccepted appointments as seen
         if self.request.user.is_superuser:
-            unaccepted_appointments = Appointment.objects.filter(accepted=False, is_seen=False)
+            unaccepted_appointments = Appointment.objects.filter(
+                accepted=False, is_seen=False)
             unaccepted_appointments.update(is_seen=True)
             return Appointment.objects.all()
         else:
@@ -155,7 +158,8 @@ class UserAppointmentsView(LoginRequiredMixin, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        notifications = Notification.objects.filter(user=self.request.user, seen=False).order_by(cred)
+        notifications = Notification.objects.filter(
+            user=self.request.user, seen=False).order_by(cred)
 
         for notification in notifications:
             notification.seen = True
@@ -217,9 +221,11 @@ def get_notification_counts(user):
         return counts, user_count_b
     try:
         if user.is_superuser:
-            counts['staff_count'] = Appointment.objects.filter(accepted=False, is_seen=False).count()
+            counts['staff_count'] = Appointment.objects.filter(
+                accepted=False, is_seen=False).count()
         else:
-            user_count_value = Appointment.objects.filter(email=user.email, accepted=True, user_is_seen=False).count()
+            user_count_value = Appointment.objects.filter(
+                email=user.email, accepted=True, user_is_seen=False).count()
             user_count_b['user_count'] = user_count_value
     except Exception as e:
         print(f"Error getting notification counts: {str(e)}")

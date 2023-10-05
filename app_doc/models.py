@@ -39,6 +39,16 @@ class Notification(models.Model):
         related_name='notifications'
     )
     create_time = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f'Notification for {self.user.username} - {self.create_time}'
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    date_sent = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.date_sent}"
