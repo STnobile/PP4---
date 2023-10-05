@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 class Appointment(models.Model):
@@ -21,3 +22,23 @@ class Appointment(models.Model):
     class Meta:
         ordering = ["-sent_date"]
 
+
+class Notification(models.Model):
+    seen = models.BooleanField(default=False)
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='notifications'
+    )
+    message = models.TextField(blank=True, null=True)
+    appointment = models.ForeignKey(
+        'Appointment',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='notifications'
+    )
+    create_time = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'Notification for {self.user.username} - {self.create_time}'

@@ -14,7 +14,8 @@ import datetime
 from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
+import re
 
 
 def manage_staff_view(request):
@@ -42,10 +43,31 @@ class HomeTemplateView(TemplateView):
         context['count'] = user_count_b.get('user_count', 0)
         return context
 
+    def validate_email(self, email):
+        email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        return re.match(email_regex, email)
+
     def post(self, request):
         name = request.POST.get("name")
         email = request.POST.get("email")
         message = request.POST.get("message")
+
+        # Validating name
+        if not name or len(name) < 2:
+            messages.error(request, "Name must be at least 2 characters long.")
+            return redirect('home')  # Replace 'home' with the name of your home route
+
+        # Validating email
+        if not email or not self.validate_email(email):
+            messages.error(request, "Please provide a valid email address.")
+            return redirect('home')  
+
+        # Validating message
+        if not message or len(message) < 10:
+            messages.error(request, "Message must be at least 10 characters long.")
+            return redirect('home')  
+
+        # if all validations pass, proceed with the original functionality
         return HttpResponse("Email sent successfully!")
 
 
@@ -73,6 +95,11 @@ class AppointmentTemplateView(TemplateView):
 
         messages.add_message(request, messages.SUCCESS,
                              f"Thanks {fname} for making an appointment, we will email you ASAP!")
+        
+        if request.user is not AnonymousUser:
+            # Notification.objects.create(user=request.user, appointment=Appointment, message=f"Thanks {fname} for making an appointment, we will email you ASAP!")
+            return redirect(reverse("manage"))
+
         return HttpResponseRedirect(request.path)
 
 
@@ -128,10 +155,12 @@ class UserAppointmentsView(LoginRequiredMixin, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-       # If the user accessing this view is a regular user, mark all their accepted appointments as seen
-        accepted_appointments = Appointment.objects.filter(email=self.request.user.email, accepted=True, user_is_seen=False)
-        accepted_appointments.update(user_is_seen=True)
-        return Appointment.objects.filter(email=self.request.user.email)
+        notifications = Notification.objects.filter(user=self.request.user, seen=False).order_by(cred)
+
+        for notification in notifications:
+            notification.seen = True
+
+        return notifications
 
 
 class AppointmentReschedule(LoginRequiredMixin, UpdateView):
@@ -194,5 +223,5 @@ def get_notification_counts(user):
             user_count_b['user_count'] = user_count_value
     except Exception as e:
         print(f"Error getting notification counts: {str(e)}")
-    
+
     return counts, user_count_b

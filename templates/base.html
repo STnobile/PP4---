@@ -73,7 +73,7 @@
                                 <i class="fa-regular fa-bell fa-xl" style="color: #0b070c;"></i>
                             </a>
                             {% if count > 0 %}
-                             <span class="badge badge-danger">{{ count }}</span>
+                            <span class="badge badge-danger">{{ count }}</span>
                             {% endif %}
                         </li>
                         {% endif %}
@@ -93,8 +93,10 @@
                                         href="{% url 'account_signup' %}">New around
                                         here? Sign up</a>
                                     {% endif %}
+                                    {% if user.is_authenticated %}
                                     <a class="dropdown-item" style="border-radius: 50px;"
                                         href="{% url 'account_logout' %}">Log Out</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </li>
@@ -102,6 +104,15 @@
                 </div>
             </div>
         </nav>
+        {% if messages %}
+        <div class="card notification-card notification-invitation">
+            <div class="card-body">
+                {% for message in messages %}
+                <div class="card-title">{{message}} </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
         {% block cta %}{% endblock cta %}
     </div>

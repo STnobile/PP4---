@@ -2,78 +2,83 @@
 {% load static %}
 {% block cta %}
 <div class="container hero">
-        <div class="row">
-            <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                <h1>Exceptional Medical Care for All Ages.</h1>
-                <p> At our Medical Center
-                    we combine world class medicine
-                    with compassionate care. </p>
-                    <a href="{% url 'appointment' %}" class="btn btn-light btn-lg action-button">Book an appointment</a>
-            </div>
-
-        </div>
+  <div class="row">
+    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+      <h1>Exceptional Medical Care for All Ages.</h1>
+      <p> At our Medical Center
+        we combine world class medicine
+        with compassionate care. </p>
+      <a href="{% url 'appointment' %}" class="btn btn-light btn-lg action-button">Book an appointment</a>
     </div>
+
+  </div>
+</div>
 
 {% endblock cta %}
 
 {% block content %}
-<section class="container py-5"  style="margin-block:200px;" id="team">
-    <div class="row text-center ">
-        <div class="col-lg-8 mx-auto">
-            <h2 class="display-4">Our Team</h2>
-            <p class="lead">Rely on established and competent professionals.
-            </p>
-        </div>
+<section class="container py-5" style="margin-block:200px;" id="team">
+  <div class="row text-center ">
+    <div class="col-lg-8 mx-auto">
+      <h2 class="display-4">Our Team</h2>
+      <p class="lead">Rely on established and competent professionals.
+      </p>
     </div>
+  </div>
 
-    <div class="container">
-        <div class="row text-center">
+  <div class="container">
+    <div class="row text-center">
 
-            <!-- Team item -->
-            <div class="col-xl-3 col-sm-6 mb-5">
-              <div class="bg-white rounded shadow-sm py-5 px-4">
-                  <img src="{% static 'media/koala.png' %}" alt="Our dr beluga" class="mh-100 img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                  <h5 class="mb-0">Dr. Beluga</h5>
-                  <span class="small text-uppercase text-muted">Consultant anesthesiologist</span>
-              </div>
-          </div><!-- End -->
-
-            <!-- Team item -->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/monkey.png' %}" alt="Our dr pesca" class="mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                  <h5 class="mb-0">Dr. Pesca</h5>
-                  <span class="small text-uppercase text-muted">Consultant Obstetrician</span>
-              </div>
-            </div><!-- End -->
-
-            <!-- Team item -->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/shark.png' %}" alt="our dr zorro" class="mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                    <h5 class="mb-0">Dr. Zorro</h5>
-                    <span class="small text-uppercase text-muted">Consultant dermatologist</span>
-                </div>
-            </div><!-- End -->
-
-            <!-- Team item -->
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/cow.png' %}" alt="Our dr salmon" class="mh-100 rounded-circle mb-3 img-thumbnail shadow-sm">
-                  <h5 class="mb-0">Dr. Salmon </h5>
-                  <span class="small text-uppercase text-muted">Consultant cardiothoracic</span>
-              </div>
-            </div><!-- End -->
+      <!-- Team item -->
+      <div class="col-xl-3 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4">
+          <img src="{% static 'media/koala.png' %}" alt="Our dr beluga"
+            class="mh-100 img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Dr. Beluga</h5>
+          <span class="small text-uppercase text-muted">Consultant anesthesiologist</span>
         </div>
+      </div><!-- End -->
+
+      <!-- Team item -->
+      <div class="col-xl-3 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/monkey.png' %}" alt="Our dr pesca"
+            class="mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Dr. Pesca</h5>
+          <span class="small text-uppercase text-muted">Consultant Obstetrician</span>
+        </div>
+      </div><!-- End -->
+
+      <!-- Team item -->
+      <div class="col-xl-3 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/shark.png' %}" alt="our dr zorro"
+            class="mh-100img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Dr. Zorro</h5>
+          <span class="small text-uppercase text-muted">Consultant dermatologist</span>
+        </div>
+      </div><!-- End -->
+
+      <!-- Team item -->
+      <div class="col-xl-3 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'media/cow.png' %}" alt="Our dr salmon"
+            class="mh-100 rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Dr. Salmon </h5>
+          <span class="small text-uppercase text-muted">Consultant cardiothoracic</span>
+        </div>
+      </div><!-- End -->
     </div>
+  </div>
 </section><!-- End -->
 
 
 
 <section id="services">
   <div class="bg-info text-center py-5 mb-4">
-      <div class="container">
-        <h2 class="fw-light text-white">Services</h2>
-        <p class="overview">Let us be your healthcare partner. You are at the center of everything we do. We provide compassionate and expert care to our community.</p>
-      </div>
+    <div class="container">
+      <h2 class="fw-light text-white">Services</h2>
+      <p class="overview">Let us be your healthcare partner. You are at the center of everything we do. We provide
+        compassionate and expert care to our community.</p>
     </div>
+  </div>
   <div class="container">
     <div class="row">
       <!-- Team Member 1 -->
@@ -118,121 +123,138 @@
       </div>
     </div>
     <!-- /.row -->
-  
+
   </div>
 </section>
 
 <section class="text-center conatiner" style="margin-block:200px;" id="reviews">
-    <h2>Satisfied Patients</h2>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Carousel indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>   
-        <!-- Wrapper for carousel items -->
-        <div class="carousel-inner">		
-            <div class="carousel-item active">
-                <div class="img-box"><img src="{% static 'media/bear.png' %}" alt="testimonial user"></div>
-                <p class="testimonial">Everyone was very nice, and it is nice to be treated well since you are the patient in need of help.</p>
-                <p class="overview">Michael Bee</p>
-            </div>
-            <div class="carousel-item">
-                <div class="img-box"><img src="{% static 'media/fox.png' %}" alt="testimonial user"></div>
-                <p class="testimonial">Caring, smiling and laughing is good atmosphere for patients. I will continue to come here when my family doctor isn't available. I was very well taken care of</p>
-                <p class="overview">Lupe Lucio</p>
-            </div>
-            <div class="carousel-item">
-                <div class="img-box"><img src="{% static 'media/rabbit.png' %}" alt="testimonial user"></div>
-                <p class="testimonial">This is easily the best concierge medical practice in the center of Stockholm area. I was a member of a different concierge practice before and that doctor did not even go to the hospital to see me when I had an emergency. That's definitely not the case now, always on top of everything and provides excellent care in or out of the hospital! Thank you Dr.!</p>
-                <p class="overview">Paula Wilson Leviosa</p>
-                
-            </div>		
-        </div>
+  <h2>Satisfied Patients</h2>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Carousel indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <!-- Wrapper for carousel items -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="img-box"><img src="{% static 'media/bear.png' %}" alt="testimonial user"></div>
+        <p class="testimonial">Everyone was very nice, and it is nice to be treated well since you are the patient in
+          need of help.</p>
+        <p class="overview">Michael Bee</p>
+      </div>
+      <div class="carousel-item">
+        <div class="img-box"><img src="{% static 'media/fox.png' %}" alt="testimonial user"></div>
+        <p class="testimonial">Caring, smiling and laughing is good atmosphere for patients. I will continue to come
+          here when my family doctor isn't available. I was very well taken care of</p>
+        <p class="overview">Lupe Lucio</p>
+      </div>
+      <div class="carousel-item">
+        <div class="img-box"><img src="{% static 'media/rabbit.png' %}" alt="testimonial user"></div>
+        <p class="testimonial">This is easily the best concierge medical practice in the center of Stockholm area. I was
+          a member of a different concierge practice before and that doctor did not even go to the hospital to see me
+          when I had an emergency. That's definitely not the case now, always on top of everything and provides
+          excellent care in or out of the hospital! Thank you Dr.!</p>
+        <p class="overview">Paula Wilson Leviosa</p>
 
+      </div>
     </div>
+
+  </div>
 
 </section>
 
 
 <section id="contact" class="card m-4 p-4">
-    <div class="container">
-        <div class="row text-center">
-          
-            <div class="col-sm-6">
-            <div class="contact-detail-box">
-              <i class="far fa-envelope text-colored fa-3x"></i>
-              <h4>Get In Touch</h4>
-              <abbr title="Phone">P:</abbr> +46 768941799<br>
-              E: <a href="mailto:email@email.com" class="text-muted">info-vismara@gmail.com</a>
-            </div>
-          </div><!-- end col -->
-  
-          <div class="col-sm-6">
-            <div class="contact-detail-box">
-              <i class="fa fa-map-marker fa-3x text-colored"></i>
-              <h4>Our Location</h4>
-  
-              <address>
-                Norrlandsgatan 24,<br>
-                111 43 Stockholm<br>
-             </address>
-            </div>
-          </div><!-- end col -->
-  
-  
-  
-        </div>
-        <!-- end row -->
-  
-  
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="contact-map">
-              <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.824319101677!2d18.066654740445237!3d59.335886849676626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d5c918d3fa7%3A0x7d187e0adb521adf!2sNorrlandsgatan%2024%2C%20111%2043%20Stockholm!5e0!3m2!1sen!2sse!4v1686915273208!5m2!1sen!2sse" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-          </div>
-          <!-- end col -->
-  
-          <!-- Contact form -->
-          <div class="col-sm-6">
-            <form name="ajax-form" id="ajax-form" method="post" class="form-main" action="{% url 'home' %}">
-            {% csrf_token %}
-            <!-- Form-name -->
-              <div class="form-group">
-                <label for="name2">Name</label>
-                <input class="form-control" id="name2" name="name" type="text" placeholder="name">
-                <div class="error" id="err-name" style="display: none;">Please enter name</div>
-              </div> 
+  <div class="container">
+    <div class="row text-center">
 
-            <!-- Form-email -->
-              <div class="form-group">
-                <label for="email2">Email</label>
-                <input class="form-control" id="email2" name="email" type="text" placeholder="email">
-                <div class="error" id="err-emailvld" style="display: none;">E-mail format not valid</div> 
-              </div> 
-  
-              <!-- Form-message -->
-              <div class="form-group">
-                <label for="message2">Message</label>
-                <textarea class="form-control" id="message2" name="message" rows="5" placeholder="message">Message</textarea>
-  
-                <div class="error" id="err-message" style="display: none;">Please enter message</div>
-              </div> <!-- /col -->
-  
-              <div class="row">            
-                  <button type="submit" class="btn btn-primary btn-shadow btn-rounded w-md" id="send">Send</button>
-              </div> <!-- /col -->
-            
-  
-            </form> <!-- /form -->
-          </div> <!-- end col -->
-  
-        </div> <!-- end row -->
-     </div>
-    
-        
+      <div class="col-sm-6">
+        <div class="contact-detail-box">
+          <i class="far fa-envelope text-colored fa-3x"></i>
+          <h4>Get In Touch</h4>
+          <abbr title="Phone">P:</abbr> +46 768941799<br>
+          E: <a href="mailto:email@email.com" class="text-muted">info-vismara@gmail.com</a>
+        </div>
+      </div><!-- end col -->
+
+      <div class="col-sm-6">
+        <div class="contact-detail-box">
+          <i class="fa fa-map-marker fa-3x text-colored"></i>
+          <h4>Our Location</h4>
+
+          <address>
+            Norrlandsgatan 24,<br>
+            111 43 Stockholm<br>
+          </address>
+        </div>
+      </div><!-- end col -->
+
+
+
+    </div>
+    <!-- end row -->
+
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="contact-map">
+          <iframe class="map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.824319101677!2d18.066654740445237!3d59.335886849676626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d5c918d3fa7%3A0x7d187e0adb521adf!2sNorrlandsgatan%2024%2C%20111%2043%20Stockholm!5e0!3m2!1sen!2sse!4v1686915273208!5m2!1sen!2sse"
+            width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <!-- end col -->
+
+
+      <!-- Contact form -->
+      <div class="col-sm-6">
+        <form name="ajax-form" id="ajax-form" method="post" class="form-main" action="{% url 'home' %}">
+          {% csrf_token %}
+          <!-- Form-name -->
+          <div class="form-group">
+            <label for="name2">Name</label>
+            <input class="form-control" id="name2" name="name" type="text" placeholder="name">
+            <div class="error" id="err-name" style="display: none;">Please enter name</div>
+          </div>
+
+          <!-- Form-email -->
+          <div class="form-group">
+            <label for="email2">Email</label>
+            <input class="form-control" id="email2" name="email" type="text" placeholder="email">
+            <div class="error" id="err-emailvld" style="display: none;">E-mail format not valid</div>
+          </div>
+
+          <!-- Form-message -->
+          <div class="form-group">
+            <label for="message2">Message</label>
+            <textarea class="form-control" id="message2" name="message" rows="5"
+              placeholder="message">Message</textarea>
+            <div class="error" id="err-message" style="display: none;">Please enter message</div>
+          </div> <!-- /col -->
+
+          <!-- Display messages here -->
+          {% if messages %}
+          <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="row">
+            <button type="submit" class="btn btn-primary btn-shadow btn-rounded w-md" id="send">Send</button>
+          </div> <!-- /col -->
+
+        </form> <!-- /form -->
+      </div> <!-- end col -->
+
+    </div> <!-- end row -->
+  </div>
+
+
 </section>
 
 {% endblock content %}
