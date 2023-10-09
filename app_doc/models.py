@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class Appointment(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField(max_length=254)
     phone = models.CharField(max_length=50)
     subject = models.CharField(max_length=200, default="")
     request = models.TextField(blank=True)
@@ -30,7 +30,7 @@ class Notification(models.Model):
         on_delete=models.CASCADE,
         related_name='notifications'
     )
-    message = models.TextField(blank=True, null=True)
+    message = models.CharField(max_length=255, blank=True, null=True)
     appointment = models.ForeignKey(
         'Appointment',
         on_delete=models.SET_NULL,

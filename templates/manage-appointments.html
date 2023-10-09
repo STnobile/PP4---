@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    
 
-    <div class="container mt-5">
-         <div class="col-11 text-center mt-4 mb-4">
-          <h3>
+
+<div class="container mt-5">
+    <div class="col-11 text-center mt-4 mb-4">
+        <h3>
             Manage appointments
-          </h3>
-     </div>
-      <div class="row">
+        </h3>
+    </div>
+    <div class="row">
         {% for app in appointments %}
         <div class="col-lg-4">
             <div class="card card-margin">
@@ -17,20 +17,25 @@
                     <h5 class="card-title">{{ app.first_name }} {{ app.last_name }}</h5>
                 </div>
                 <div class="card-body pt-0">
+                    {% if app.is_accepted %}
+                    <div class="alert alert-success">
+                        Your appointment has been accepted on {{ app.accepted_date|date:"F d, Y" }}.
+                    </div>
+                    {% endif %}
                     <div class="widget-49">
                         <div class="widget-49-title-wrapper">
                             <div class="widget-49-date-primary">
- <!------- Here is to keep track of the date since the booking request until the last confirmation of the admin ------->
-                            {% if app.accepted_date %}
+                                <!------- Here is to keep track of the date since the booking request until the last confirmation of the admin ------->
+                                {% if app.accepted_date %}
                                 <span class="widget-49-date-day">{{ app.accepted_date|date:"d" }}</span>
                                 <span class="widget-49-date-month">{{ app.accepted_date|date:"M" }}</span>
-                            {% elif app.reschedule_date %}
-                                <span class="widget-49-date-day">{{ app.reschedule_date|date:"d" }}</span> 
+                                {% elif app.reschedule_date %}
+                                <span class="widget-49-date-day">{{ app.reschedule_date|date:"d" }}</span>
                                 <span class="widget-49-date-month">{{ app.reschedule_date|date:"M" }}</span>
-                            {% else %}
+                                {% else %}
                                 <span class="widget-49-date-day">{{ app.sent_date|date:"d" }}</span>
                                 <span class="widget-49-date-month">{{ app.sent_date|date:"M" }}</span>
-                            {% endif %}
+                                {% endif %}
                             </div>
                             <div class="widget-49-meeting-info">
                                 <span class="widget-49-pro-title">{{ app.email }}</span>
@@ -39,7 +44,7 @@
                         </div>
                         <div class="widget-49-meeting-points card-header">
                             <h6 class="card-title">Subject: {{ app.subject }}</h6>
-                        </div> 
+                        </div>
                         <div class="widget-49-meeting-points">
                             <span> Request: {{ app.request }}</span>
                         </div>
@@ -49,45 +54,32 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <input type="hidden" name="appointment-id" value="{{ app.id }}" />
-                                <!-- For Admins -->
-                                <!-- If not accepted -->
-                                <!-- Show sent date accept button -->
-                                <!-- if accepted and rescheduled -->
-                                <!-- Show rescheduled date and accept button -->
-
-                                <!-- For User -->
-                                <!-- If not accepted -->
-                                <!-- Show delete button -->
-                                <!-- Once accepted -->
-                                <!-- Show reschedule button and delete button -->
-                                <!-- If accepted and rescheduled -->
-                                <!-- Don't show any action button -->
-
+                                
                                 {% if request.user.is_superuser %}
-                                {% if not app.accepted and not app.reschedule_date %}
-                                        <input type="date" name="date" class="form-control mb-2" placeholder='{{ app.accepted_date }}'
-                                            value="{{ app.sent_date }}" min="{{ app.sent_date }}" max="2025-12-31" required>
-                                        <input class="btn-block btn-primary form-control" type="submit" value="Accept">    
+                                    {% if not app.accepted and not app.reschedule_date %}
+                                        <input type="date" name="date" class="form-control mb-2"
+                                            placeholder='{{ app.accepted_date }}' value="{{ app.sent_date }}"
+                                            min="{{ app.sent_date }}" max="2025-12-31" required>
+                                        <input class="btn-block btn-primary form-control" type="submit" value="Accept">
                                     {% elif not app.accepted and app.reschedule_date %}
                                         <p>Patient requested for: {{ app.reschedule_date }}</p>
-                                        <input type="date" name="date" class="form-control mb-2" placeholder="{{ app.accepted_date }}"
-                                            value="{{ app.reschedule_date }}" min="{{ app.sent_date }}" max="2025-12-31" required>
+                                        <input type="date" name="date" class="form-control mb-2"
+                                            placeholder="{{ app.accepted_date }}" value="{{ app.reschedule_date }}"
+                                            min="{{ app.sent_date }}" max="2025-12-31" required>
                                         <input class="btn-block btn-primary form-control" type="submit" value="Accept">
                                     {% endif %}
-                                    
-
                                 {% else %}
                                     {% if not app.accepted %}
-                                        <a class="btn-block btn-primary form-control"
-                                            href="{% url 'appointment_delete' app.id %}">Delete</a>
-                                        
+                                        {# Display nothing #}
                                     {% elif app.accepted and not app.reschedule_date %}
                                         <p> Appointment Date: {{ app.accepted_date|date:"d-m-Y" }} Confirmed.</p>
                                         <a class="btn-block btn-primary form-control"
-                                            href="{% url 'appointment_reschedule' app.id %}">Reschedule</a>
-                                        <a class="btn-block btn-primary form-control"
-                                            href="{% url 'appointment_delete' app.id %}">Delete</a>
+                                            href="{% url 'appointment_reschedule' app.id %}">Reschedule</a> 
+                                    {% elif app.reschedule_date %}
+                                        <p> Reschedule date for: {{ app.reschedule_date|date:"d-m-Y" }}</p>
                                     {% endif %}
+                                    <a class="btn-block btn-primary form-control"
+                                        href="{% url 'appointment_delete' app.id %}">Delete</a>
                                 {% endif %}
                             </div>
                         </form>
@@ -118,4 +110,4 @@
     </div>
     {% endif %}
 
-{% endblock content %}
+    {% endblock content %}

@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -8,7 +9,7 @@ from django.views import View
 from django.core.mail import EmailMessage, message
 from django.conf import settings
 from django.contrib import messages
-from .models import Appointment
+from .models import Appointment, ContactMessage, Notification
 from django.views.generic import ListView
 import datetime
 from django.template import Context
@@ -16,7 +17,6 @@ from django.template.loader import render_to_string, get_template
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User, AnonymousUser
 import re
-from .models import ContactMessage
 
 
 def manage_staff_view(request):
@@ -42,6 +42,7 @@ class HomeTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         counts, user_count_b = get_notification_counts(self.request.user)
+        context['form_errors'] = self.request.session.pop('form_errors', [])
         context.update(counts)
         context.update(user_count_b)
         context['count'] = user_count_b.get('user_count', 0)
@@ -52,7 +53,8 @@ class HomeTemplateView(TemplateView):
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        form_errors = []
+
+        form_errors = []  # Initialize an empty list to store any form error messages
 
         if not name or len(name) < 2:
             form_errors.append('Name must be at least 2 characters long.')
@@ -62,14 +64,13 @@ class HomeTemplateView(TemplateView):
             form_errors.append('Message must be at least 10 characters long.')
 
         if form_errors:
-            # If form_errors is not empty, re-render the page with the error messages
-            context = self.get_context_data(**kwargs)
-            context['form_errors'] = form_errors
-            return render(request, self.template_name, context)
+            # Store the form errors in the session
+            request.session['form_errors'] = form_errors
+            return redirect(reverse('home') + '#contact')
         else:
-            # If form_errors is empty, meaning the form is valid, process the data and redirect
+            # If no error messages, process the data and redirect to the top.
             messages.success(request, 'Email sent successfully!')
-            # Email sending logic here
+            # Email sending logic here...
             return redirect('home')
 
 
@@ -93,13 +94,12 @@ class AppointmentTemplateView(TemplateView):
             request=message,
         )
 
-        appointment.save()
+        appointment
 
         messages.add_message(request, messages.SUCCESS,
                              f"Thanks {fname} for making an appointment, we will email you ASAP!")
 
         if request.user is not AnonymousUser:
-            # Notification.objects.create(user=request.user, appointment=Appointment, message=f"Thanks {fname} for making an appointment, we will email you ASAP!")
             return redirect(reverse("manage"))
 
         return HttpResponseRedirect(request.path)
@@ -125,7 +125,7 @@ class ManageAppointmentTemplateView(LoginRequiredMixin, ListView):
         }
 
         messages.add_message(request, messages.SUCCESS,
-                             f"You accepted the appointment of {appointment.first_name}")
+                            f"You accepted the appointment of {appointment.first_name}")
         return HttpResponseRedirect(request.path)
 
     def get_queryset(self):
@@ -158,13 +158,14 @@ class UserAppointmentsView(LoginRequiredMixin, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        notifications = Notification.objects.filter(
-            user=self.request.user, seen=False).order_by(cred)
-
+        # Mark notifications as seen
+        notifications = Notification.objects.filter(user=self.request.user,
+                                                    seen=False).order_by('-create_time')
         for notification in notifications:
             notification.seen = True
 
-        return notifications
+        # Return the user's appointments
+        return Appointment.objects.filter(email=self.request.user.email)
 
 
 class AppointmentReschedule(LoginRequiredMixin, UpdateView):
@@ -190,10 +191,19 @@ class AppointmentReschedule(LoginRequiredMixin, UpdateView):
         return redirect(reverse("manage"))
 
 
-class AppointmentDelete(LoginRequiredMixin, DeleteView):
-    model = Appointment
-    success_url = reverse_lazy('manage')
-    template_name = "delete.html"
+class AppointmentDelete(View):
+    template_name = 'delete.html'
+
+    def get(self, request, pk):
+        appointment = get_object_or_404(Appointment, pk=pk)
+        return render(request, self.template_name, {'appointment': appointment})
+
+    def post(self, request, pk):
+        appointment = get_object_or_404(Appointment, pk=pk)
+        appointment.delete()
+        messages.success(
+            request, f'Appointment for {appointment.first_name} {appointment.last_name} was canceled.')
+        return redirect(reverse_lazy('manage'))
 
 
 class SendMessageView(View):

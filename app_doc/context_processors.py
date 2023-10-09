@@ -1,4 +1,4 @@
-from .models import Appointment
+from .models import Appointment, Notification
 from django.contrib.auth import get_user_model
 import logging
 
@@ -11,14 +11,9 @@ def get_notification(request):
 
     if request.user.is_authenticated:
         try:
-            # Try to count the relevant appointments
-            # count = Appointment.objects.filter(
-            #     email=request.user.email, 
-            #     accepted=True, 
-            #     user_is_seen=False
-            # ).count()
+            # Use request.user instead of user
             count = Notification.objects.filter(
-                user=user,
+                user=request.user,
                 seen=False
             ).count()
         except Exception as e:
