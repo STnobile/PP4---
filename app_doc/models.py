@@ -19,6 +19,24 @@ class Appointment(models.Model):
     def __str__(self):
         return self.first_name
 
+    def mark_as_seen(self, user):
+        """
+        Mark the appointment as seen by a superuser or a regular user.
+        """
+        if user.is_superuser:
+            self.is_seen = True
+        else:
+            self.user_is_seen = True
+        self.save()
+
+    def reset_notifications(self):
+        """
+        Reset the notification flags when an appointment is modified.
+        """
+        self.is_seen = False
+        self.user_is_seen = False
+        self.save()
+
     class Meta:
         ordering = ["-sent_date"]
 

@@ -12,6 +12,7 @@ from django.contrib import messages
 from .models import Appointment, ContactMessage, Notification
 from django.views.generic import ListView
 import datetime
+import logging
 from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,8 +27,16 @@ def manage_staff_view(request):
 
     # Get all superusers
     staff_members = User.objects.filter(is_superuser=True)
+
+    # Mark all unaccepted and unseen appointments as seen when the superuser accesses the page
+    Appointment.objects.filter(accepted=False, is_seen=False).update(is_seen=True)
+
+    # Calculate the notification count (if needed in the context)
+    staff_count = Appointment.objects.filter(accepted=False, is_seen=False).count()
+
     context = {
         'staff_members': staff_members,
+        'staff_count': staff_count,  # Add this line if you want to use the count in the template
     }
     return render(request, 'manage_staff.html', context)
 
@@ -41,12 +50,16 @@ class HomeTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        counts, user_count_b = get_notification_counts(self.request.user)
-        context['form_errors'] = self.request.session.pop('form_errors', [])
+
+        # Ensure counts is a dictionary
+        counts = get_notification_counts(self.request.user)
+        if counts is None:
+            counts = {'staff_count': 0, 'user_count': 0}
+
+        # Update context with counts and form errors
         context.update(counts)
-        context.update(user_count_b)
-        context['count'] = user_count_b.get('user_count', 0)
-        context['form_errors'] = []
+        context['form_errors'] = self.request.session.pop('form_errors', [])
+        context['count'] = counts.get('user_count', 0)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -117,19 +130,14 @@ class ManageAppointmentTemplateView(LoginRequiredMixin, ListView):
         appointment = Appointment.objects.get(id=appointment_id)
         appointment.accepted = True
         appointment.accepted_date = date
+        appointment.reset_notifications()  # Reset notifications when modifying an appointment
         appointment.save()
 
-        data = {
-            "fname": appointment.first_name,
-            "date": date,
-        }
-
         messages.add_message(request, messages.SUCCESS,
-                            f"You accepted the appointment of {appointment.first_name}")
+                             f"You accepted the appointment of {appointment.first_name}")
         return HttpResponseRedirect(request.path)
 
     def get_queryset(self):
-        # If the user accessing this view is a superuser, then mark all unaccepted appointments as seen
         if self.request.user.is_superuser:
             unaccepted_appointments = Appointment.objects.filter(
                 accepted=False, is_seen=False)
@@ -158,11 +166,10 @@ class UserAppointmentsView(LoginRequiredMixin, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        # Mark notifications as seen
-        notifications = Notification.objects.filter(user=self.request.user,
-                                                    seen=False).order_by('-create_time')
-        for notification in notifications:
-            notification.seen = True
+        Appointment.objects.filter(
+            email=self.request.user.email, 
+            user_is_seen=False
+        ).update(user_is_seen=True)
 
         # Return the user's appointments
         return Appointment.objects.filter(email=self.request.user.email)
@@ -172,17 +179,16 @@ class AppointmentReschedule(LoginRequiredMixin, UpdateView):
     template_name = "form.html"
     model = Appointment
     fields = ['accepted', 'reschedule_date']
-
     context_object_name = "app"
     login_required = True
 
     def post(self, request, pk):
         date = request.POST.get("date")
-        appointment_id = request.POST.get("appointment-id")
         appointment = Appointment.objects.get(id=pk)
         appointment.reschedule_date = date
         appointment.accepted = False
         appointment.accepted_date = None
+        appointment.reset_notifications()
         appointment.save()
 
         messages.add_message(request, messages.SUCCESS,
@@ -225,19 +231,19 @@ class SendMessageView(View):
 
 
 def get_notification_counts(user):
-    counts = {'staff_count': 0}
-    user_count_b = {'user_count': 0}
+    counts = {'staff_count': 0, 'user_count': 0}
+    
     if not user.is_authenticated:
-        return counts, user_count_b
+        return counts
+    
     try:
         if user.is_superuser:
             counts['staff_count'] = Appointment.objects.filter(
                 accepted=False, is_seen=False).count()
         else:
-            user_count_value = Appointment.objects.filter(
+            counts['user_count'] = Appointment.objects.filter(
                 email=user.email, accepted=True, user_is_seen=False).count()
-            user_count_b['user_count'] = user_count_value
     except Exception as e:
-        print(f"Error getting notification counts: {str(e)}")
-
-    return counts, user_count_b
+        logging.error(f"Error getting notification counts: {str(e)}")
+    
+    return counts

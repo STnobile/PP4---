@@ -2,48 +2,33 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Your Appointments</h2>
+    <h2 class="text-center">Your Appointments</h2>
 
     {% if user_appointments %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Subject</th>
-                <th>Request</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
+        <div class="row justify-content-center">
             {% for appointment in user_appointments %}
-            <tr>
-                <td>{{ appointment.first_name }}</td>
-                <td>{{ appointment.last_name }}</td>
-                <td>{{ appointment.email }}</td>
-                <td>{{ appointment.phone }}</td>
-                <td>{{ appointment.subject }}</td>
-                <td>{{ appointment.request }}</td>
-                <td>
-                    {% if appointment.accepted %}
-                    Accepted on {{ appointment.accepted_date }}
-                    {% elif appointment.reschedule_date %}
-                    Rescheduled to {{ appointment.reschedule_date }}
-                    {% else %}
-                    Pending
-                    {% endif %}
-                </td>
-                
-                <td>{{ appointment.date }}</td>
-            </tr>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <div class="card-header text-center">
+                        <h5>Appointment Details:</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p><strong>Name:</strong> 
+                            <br> {{ appointment.first_name }} {{ appointment.last_name }}</p>
+                        <p><strong>Email:</strong> <br> {{ appointment.email }}</p>
+                        <p><strong>Phone:</strong> <br> {{ appointment.phone }}</p>
+                        <p><strong>Subject:</strong> <br> {{ appointment.subject }}</p>
+                        <p><strong>Request:</strong> <br> {{ appointment.request }}</p>
+                        <p><strong>Sent Date:</strong> <br> {{ appointment.sent_date }}</p>
+                        <p><strong>Accepted Date:</strong> <br> {{ appointment.accepted_date }}</p>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </tbody>
-    </table>
+        </div>
     {% else %}
-    <p>You have no appointments scheduled.</p>
+    <p class="text-center">You have no appointments scheduled.</p>
     {% endif %}
 </div>
 {% endblock %}
+
