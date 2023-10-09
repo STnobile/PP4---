@@ -84,7 +84,7 @@ class HomeTemplateView(TemplateView):
             # If no error messages, process the data and redirect to the top.
             messages.success(request, 'Email sent successfully!')
             # Email sending logic here...
-            return redirect('home')
+            return redirect('/accountslogin/')
 
 
 class AppointmentTemplateView(TemplateView):
