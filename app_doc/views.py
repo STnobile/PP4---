@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -36,7 +37,7 @@ def manage_staff_view(request):
 
     context = {
         'staff_members': staff_members,
-        'staff_count': staff_count,  # Add this line if you want to use the count in the template
+        'staff_count': staff_count,
     }
     return render(request, 'manage_staff.html', context)
 
