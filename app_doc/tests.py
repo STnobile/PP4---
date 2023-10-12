@@ -1,6 +1,8 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
+from app_doc.models import Appointment
 
 
 class ManageStaffViewTest(TestCase):
@@ -33,6 +35,13 @@ class HomeTemplateViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
         # Add more assertions to check for form errors in the session or messages
 
+    def test_post_valid_data_sends_message(self):
+        data = {'name': 'Test Name', 'email': 'test@example.com', 'message': 'Hello, this is a test message with more than 10 characters.'}
+        response = self.client.post(self.url, data)
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), 'Email sent successfully!')    
+
 
 class AppointmentTemplateViewTest(TestCase):
     def setUp(self):
@@ -50,4 +59,4 @@ class AppointmentTemplateViewTest(TestCase):
         }
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        # Add more assertions to check for the creation of the appointment and messages
+        self.assertEqual(Appointment.objects.count(), 1)

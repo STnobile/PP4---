@@ -4,7 +4,7 @@ from .models import Appointment
 
 
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'is_seen', 'user_is_seen')
+    list_display = ('first_name', 'last_name')
 
 
 admin.site.register(Appointment, AppointmentAdmin)

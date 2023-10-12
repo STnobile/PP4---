@@ -16,6 +16,8 @@ urlpatterns = [
     path('manage/', ManageAppointmentTemplateView.as_view(), name='manage'),
     path('manage_user/', UserAppointmentsView.as_view(), name='manage_user'),
     path('manage_staff/', views.manage_staff_view, name='manage_staff'),
+    path('user_appointments/<int:pk>/', UserAppointmentsView.as_view(), name='user_appointments'),
     path('appointment/<int:pk>/reschedule/', AppointmentReschedule.as_view(), name ='appointment_reschedule'),
     path('appointment/<int:pk>/delete/', AppointmentDelete.as_view(), name ='appointment_delete'),
+    path('user_appointments/<int:appointment_id>/', UserAppointmentsView.as_view(), name='user_appointment_detail'),
 ]

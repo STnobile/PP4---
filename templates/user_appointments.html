@@ -3,32 +3,44 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="text-center">Your Appointments</h2>
+    
+    {% if user_notifications %}
+    <h3>Notifications:</h3>
+    <ul>
+        {% for notification in user_notifications %}
+        <li>
+            <strong>Type:</strong> {{ notification.type }} <br>
+            <strong>Date:</strong> {{ notification.date }} <br>
+            <strong>Message:</strong> {{ notification.message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     {% if user_appointments %}
-        <div class="row justify-content-center">
-            {% for appointment in user_appointments %}
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card mx-auto" style="width: 18rem;">
-                    <div class="card-header text-center">
-                        <h5>Appointment Details:</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <p><strong>Name:</strong> 
-                            <br> {{ appointment.first_name }} {{ appointment.last_name }}</p>
-                        <p><strong>Email:</strong> <br> {{ appointment.email }}</p>
-                        <p><strong>Phone:</strong> <br> {{ appointment.phone }}</p>
-                        <p><strong>Subject:</strong> <br> {{ appointment.subject }}</p>
-                        <p><strong>Request:</strong> <br> {{ appointment.request }}</p>
-                        <p><strong>Sent Date:</strong> <br> {{ appointment.sent_date }}</p>
-                        <p><strong>Accepted Date:</strong> <br> {{ appointment.accepted_date }}</p>
-                    </div>
+    <div class="row justify-content-center">
+        {% for appointment in user_appointments %}
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card mx-auto" style="width: 18rem;">
+                <div class="card-header text-center">
+                    <h5>Appointment Details:</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p><strong>Name:</strong>
+                        <br> {{ notification.first_name }} {{ appointment.last_name }}</p>
+                    <p><strong>Email:</strong> <br> {{ appointment.email }}</p>
+                    <p><strong>Phone:</strong> <br> {{ appointment.phone }}</p>
+                    <p><strong>Subject:</strong> <br> {{ appointment.subject }}</p>
+                    <p><strong>Request:</strong> <br> {{ appointment.request }}</p>
+                    <p><strong>Sent Date:</strong> <br> {{ appointment.sent_date }}</p>
+                    <p><strong>Accepted Date:</strong> <br> {{ appointment.accepted_date }}</p>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+    </div>
     {% else %}
     <p class="text-center">You have no appointments scheduled.</p>
     {% endif %}
 </div>
 {% endblock %}
-

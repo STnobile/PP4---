@@ -12,10 +12,13 @@ def get_notification(request):
     if request.user.is_authenticated:
         try:
             # Use request.user instead of user
-            count = Notification.objects.filter(
-                user=request.user,
+            notifications = Notification.objects.filter(
+                
                 seen=False
-            ).count()
+            )
+            if not request.user.is_staff:
+                notifications = notifications.filter(user=request.user)
+            count = notifications.count()
         except Exception as e:
             # Log any error that occurs
             logger.error(f"Error getting notification count: {str(e)}", exc_info=True)
