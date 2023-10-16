@@ -61,7 +61,9 @@ This section is the final of the fist page, it has a google location able to be 
 
 Clicking on book an appointment the user will be able to request an appointment filling the form.
 ## Form
-![devises responsive](/static/readme/appointmentform.png)
+
+![devises responsive](/static/readme/book-app.png)
+
 The patient will be able to insert some personal date such as:
 * Full Name
 * Email address 
@@ -69,47 +71,56 @@ The patient will be able to insert some personal date such as:
 * Subject
 * A message that explain his case.
 
-Once the patient will sent the request it will show on the Admin notification that will confirm the appointment and set a date.
-
-As displayed in the picture below.
-
-![devises responsive](/static/readme/notification.png)
 # Admin Log in
 * UserName:
-    admin
+    test
  * password:
-    CodeStart 
-# User features
+    test
 
-![devises responsive](/static/readme/book_appoinmt.png)
+# Features
+  - User Features
+  - Book Appointment Interface
 
-- The user will be able to book an appointment either will have created an account or without.
+  ![devises responsive](/static/readme/book-app.png)
 
-- Users can submit appointment requests by filling out a form with their personal details and appointment information.
+- Appointment Booking for All: Whether you've created an account or not, you can book  
+   an appointment.
 
-- Creating an account will have his advantage like be able to keep track of the status of the booking itself.
+- Simple Appointment Requests: Just fill out a form with your personal details and 
+   appointment information, and you're set.
 
-- The user  will able to reschedule or delete his appointment.
+- Account Benefits: Creating an account isn't just for show. It comes with perks such  
+  as being able to track the status of your booking.
+  
 
-![devises responsive](/static/readme/user_first_request.png)
-![devises responsive](/static/readme/cancel_your_appointment.png)
-Here it will be displayed the confirmation of the admin with the appointment date.
-![devises responsive](/static/readme/user_reschedule_appoiment.png)
-In the following pic, a scenario were the user is rescheduling the date given from the admin.
-![devises responsive](/static/readme/user_reschedule_date.png)
-![devises responsive](/static/readme/user_reschedule_date.png)
-Here the date set from the user will be displayed on the left hand-side with the day and the month after the admin accepted it.
-![devises responsive](/static/readme/admin_accepted_date2.png)
+   - Manage Your Appointment: Did something come up? No worries! You can easily reschedule 
+   or even delete your appointment.
+   
+      ![devises responsive](/static/readme/accept-date.png)
+ ## Initial Appointment Request:
+
+   - User's First Request, will get notification.
+     ![devises responsive](/static/readme/message-notification.png)
+
+   - Canceling an Appointment:
+     ![devises responsive](/static/readme/cancel-appointment.png)
+
+   - User Rescheduling
+     ![devises responsive](/static/readme/reschedule.png)
 
 
-- Also the user is able to communicate with the admin 
-through emails that he can find on the homepage.
+ Open Communication: Users can always reach out to the admin through the provided email addresses on the homepage.
 
-- Administrators can view and manage the appointments, including accepting or rescheduling appointments.
-In the following pic it will be illustrated the path of the admin from the accepting the user request to the reschedule date.
+ Admin Features
+ Manage Appointments: The admin has the capability to view all appointments, accept them, or suggest reschedules.
 
-![devises responsive](/static/readme/admin_accepting_booking.png)
-![devises responsive](/static/readme/admin_accepting_reschedule_date.png)
+ Accepting User's Booking.
+
+ Admin Accepting Booking.
+ ![devises responsive](/static/readme/admin-accept-res.png)
+
+ Accepting Rescheduled Date.
+  ![devises responsive](/static/readme/admin-reschedule.png)
 
 
 # Feature and Implementation 
@@ -124,6 +135,7 @@ In the following pic it will be illustrated the path of the admin from the accep
 
 
 ## Validation 
+
 ## HMTL
 - ![devises responsive](/static/readme/html_appiment_validation.png)
 - ![devises responsive](/static/readme/html_validation.png)

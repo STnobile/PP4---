@@ -9,23 +9,8 @@
         <ul>
             {% for notification in user_notifications %}
                 <li>
-                    <strong>Message:</strong> You have one notification go to your Manage appointment<br>
                     <strong>Ciao</strong> {{ user }} 😄<br>
-                    
-                    <!--{% if notification.appointment %}
-                        <h4>Related Appointment:</h4>
-                        <ul>
-                            <li><strong>Name:</strong> {{ notification.appointment.first_name }} {{ notification.appointment.last_name }}</li>
-                            <li><strong>Email:</strong> {{ notification.appointment.email }}</li>
-                            <li><strong>Phone:</strong> {{ notification.appointment.phone }}</li>
-                            <li><strong>Subject:</strong> {{ notification.appointment.subject }}</li>
-                            <li><strong>Request:</strong> {{ notification.appointment.request }}</li>
-                            <li><strong>Sent Date:</strong> {{ notification.appointment.sent_date }}</li>
-                            <li><strong>Accepted Date:</strong> {{ notification.appointment.accepted_date }}</li>
-                        </ul>
-                    {% else %}
-                        <p>No related appointment for this notification.</p>
-                    {% endif %}---->
+                    <strong>Message:</strong> You have one notification go to your Manage appointment<br>
                 </li>
             {% endfor %}
         </ul>
