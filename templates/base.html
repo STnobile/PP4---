@@ -55,17 +55,7 @@
                             <a class="nav-link active" href="{% url 'manage' %}">Manage</a>
                         </li>
                         {% endif %}
-                        {% if request.user.is_authenticated and request.user.is_staff %}
-                        <li class="nav-item" role="presentation">
-                            <a href="{% url 'manage_staff' %}" style="float: left; cursor: pointer;"
-                                aria-expanded="true" title="Staff: You Have a New Appointment">
-                                <i class="fa-regular fa-bell fa-xl" style="color: #0b070c;"></i>
-                            </a>
-                            {% if count > 0 %}
-                            <span class="badge badge-danger">{{ count }}</span>
-                            {% endif %}
-                        </li>
-                        {% endif %}
+                        
                         {% if request.user.is_authenticated and not request.user.is_staff %}
                         <li class="nav-item" role="presentation">
                             <a href="{% url 'manage_user' %}" style="float: left; cursor: pointer;" aria-expanded="true"
@@ -129,6 +119,9 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="{% static 'js/appointment.js' %}"></script>
+    <script>
+        document.getElementById('reschedule_date').min = new Date().toISOString().split("T")[0];
+    </script>
     <script src="https://kit.fontawesome.com/fe96350843.js" crossorigin="anonymous"></script>
 
 </body>

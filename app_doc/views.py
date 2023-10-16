@@ -82,7 +82,7 @@ class HomeTemplateView(TemplateView):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        form_errors = []  # Initialize an empty list to store any form error messages
+        form_errors = [] 
 
         if not name or len(name) < 2:
             form_errors.append('Name must be at least 2 characters long.')
@@ -126,7 +126,7 @@ class AppointmentTemplateView(TemplateView):
                              f"Thanks {fname} for making an appointment, we will email you ASAP!")
 
         if request.user is not AnonymousUser:
-            notification = Notification.objects.create(
+            Notification.objects.create(
                 user=request.user,
                 appointment=appointment,
                 seen=False,
@@ -220,7 +220,7 @@ class UserAppointmentsView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         # Extract the appointments from the notifications
-        context['user_appointments'] = Appointment.objects.filter(email=self.request.user.email, notifications__seen=False)
+        context['user_notification'] = Appointment.objects.filter(email=self.request.user.email, notifications__seen=False)
         return context
 
 
@@ -258,16 +258,6 @@ class AppointmentReschedule(LoginRequiredMixin, UpdateView):
                  appointment=appointment
                 )
 
-        # If the appointment has been rescheduled by the user, notify the superuser
-        elif not appointment.accepted:
-            superuser = get_user_model().objects.filter(is_superuser=True).first()
-            if superuser:  # Check if a superuser exists
-                Notification.objects.create(
-                 user=superuser,
-                 message=f"Appointment with {appointment.first_name} {appointment.last_name} has been rescheduled.",
-                 appointment=appointment
-                )
-
         return redirect(reverse("manage"))
 
 
@@ -302,3 +292,14 @@ class SendMessageView(View):
                 request, "Appointment rescheduled. The admin will send you a message with the new date.")
 
         return redirect("manage")
+
+
+class NotificationView(LoginRequiredMixin, View):
+    template_name = 'user_appointments.html'
+
+    def get(self, request, *args, **kwargs):
+        user_notifications = Notification.objects.filter(user=request.user).order_by('-create_time')
+        context = {
+            'user_notifications': user_notifications,
+        }
+        return render(request, self.template_name, context)

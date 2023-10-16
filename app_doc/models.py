@@ -21,7 +21,7 @@ class Appointment(models.Model):
         """
         Reset or handle notifications related to this appointment.
         """
-        # Example: Mark related notifications as seen
+
         self.notifications.update(seen=True)    
 
     class Meta:

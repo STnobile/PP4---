@@ -7,7 +7,8 @@ from .views import (
     UserAppointmentsView,
     AppointmentReschedule,
     AppointmentDelete,
-    SendMessageView
+    SendMessageView,
+    NotificationView
 )
 
 urlpatterns = [
@@ -19,5 +20,5 @@ urlpatterns = [
     path('user_appointments/<int:pk>/', UserAppointmentsView.as_view(), name='user_appointments'),
     path('appointment/<int:pk>/reschedule/', AppointmentReschedule.as_view(), name ='appointment_reschedule'),
     path('appointment/<int:pk>/delete/', AppointmentDelete.as_view(), name ='appointment_delete'),
-    path('user_appointments/<int:appointment_id>/', UserAppointmentsView.as_view(), name='user_appointment_detail'),
+    path('notifications/', NotificationView.as_view(), name='notifications'),
 ]
