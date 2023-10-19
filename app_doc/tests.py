@@ -2,23 +2,8 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
-from app_doc.models import Appointment
-
-
-class ManageStaffViewTest(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.url = reverse('manage_staff')
-        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
-
-    def test_manage_staff_view_for_unauthenticated_user(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 403)
-
-    def test_manage_staff_view_for_authenticated_superuser(self):
-        self.client.login(username='admin', password='admin')
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+from app_doc.models import Appointment, Notification
+from datetime import date
 
 
 class HomeTemplateViewTest(TestCase):
@@ -60,3 +45,44 @@ class AppointmentTemplateViewTest(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Appointment.objects.count(), 1)
+
+
+class AppointmentRescheduleTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='user', password='pass', email='user@example.com')
+        self.superuser = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+        self.appointment = Appointment.objects.create(email=self.user.email, first_name="John", last_name="Doe")
+
+        # URL for rescheduling this appointment
+        self.url = reverse('appointment_reschedule', args=[self.appointment.pk])
+
+    def test_login_required(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)  # Redirected to login
+
+    def test_only_owner_can_reschedule(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 404)  # Redirected since not owner
+
+    def test_reschedule_appointment(self):
+        self.client.login(username='user', password='pass')
+        response = self.client.post(self.url, {'date': '2023-11-20', 'accepted': True})
+
+        self.appointment.refresh_from_db()
+        self.assertEqual(self.appointment.reschedule_date, date(2023, 11, 20))
+        self.assertTrue(self.appointment.accepted)
+
+        # Check success message
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), f"Request sent for reschedule: {self.appointment.first_name}")
+
+    def test_notification_creation_on_acceptance(self):
+        self.client.login(username='user', password='pass')
+        response = self.client.post(self.url, {'date': '2023-11-20', 'accepted': True})
+
+        notification = Notification.objects.latest('id')
+        expected_user = User.objects.filter(email=self.appointment.email).first()
+        self.assertEqual(notification.user, expected_user)

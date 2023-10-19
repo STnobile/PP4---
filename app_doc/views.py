@@ -24,30 +24,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q
 from datetime import date
-
-
-def manage_staff_view(request):
-    # Check if the user is authenticated and is a superuser
-    if not request.user.is_authenticated or not request.user.is_superuser:
-        return HttpResponseForbidden("You don't have permission to access this page.")
-
-    # Get all superusers
-    staff_members = User.objects.filter(is_superuser=True)
-
-    # Mark all notifications related to unaccepted and unseen appointments as seen when the superuser accesses the page
-    unaccepted_appointments = Appointment.objects.filter(accepted=False)
-    for appointment in unaccepted_appointments:
-        appointment.reset_notifications()
-
-    # Calculate the notification count (if needed in the context)
-    staff_count = Notification.objects.filter(
-        seen=False, user=request.user).count()
-
-    context = {
-        'staff_members': staff_members,
-        'staff_count': staff_count,
-    }
-    return render(request, 'manage_staff.html', context)
+from django.http import Http404
 
 
 class HomeTemplateView(TemplateView):
@@ -63,18 +40,23 @@ class HomeTemplateView(TemplateView):
         user_notifications = 0
         staff_notifications = 0
 
-        # Check if the user is authenticated before trying to fetch notifications
+    # Check if the user is authenticated before trying to fetch notifications
         if self.request.user.is_authenticated:
             # Fetch notification counts using the Notification model
             user_notifications = Notification.objects.filter(
-                user=self.request.user, seen=False).count()
+              user=self.request.user, seen=False).count()
 
         if self.request.user.is_superuser:
             staff_notifications = Notification.objects.filter(
-                appointment__accepted=False, seen=False).count()
+             appointment__accepted=False, seen=False).count()
 
-            context['user_notifications'] = user_notifications
-            context['staff_notifications'] = staff_notifications
+        context['user_notifications'] = user_notifications
+
+    # Retrieve form_errors from the session and add to context
+        form_errors = self.request.session.pop('form_errors', None)
+        if form_errors:
+            context['form_errors'] = form_errors
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -82,7 +64,7 @@ class HomeTemplateView(TemplateView):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        form_errors = [] 
+        form_errors = []
 
         if not name or len(name) < 2:
             form_errors.append('Name must be at least 2 characters long.')
@@ -125,7 +107,7 @@ class AppointmentTemplateView(TemplateView):
         messages.add_message(request, messages.SUCCESS,
                              f"Thanks {fname} for making an appointment, we will email you ASAP!")
 
-        if request.user is not AnonymousUser:
+        if request.user.is_authenticated:
             Notification.objects.create(
                 user=request.user,
                 appointment=appointment,
@@ -148,7 +130,6 @@ class ManageAppointmentTemplateView(LoginRequiredMixin, ListView):
         appointment = Appointment.objects.get(id=appointment_id)
         appointment.accepted = True
         appointment.accepted_date = date
-        appointment.reset_notifications()
         appointment.save()
 
         user_related_to_appointment = User.objects.filter(email=appointment.email).first()
@@ -202,26 +183,22 @@ class ManageAppointmentTemplateView(LoginRequiredMixin, ListView):
 
 
 class UserAppointmentsView(LoginRequiredMixin, ListView):
-    template_name = "user_appointments.html"
+    template_name = "user_notification.html"
     model = Appointment
     context_object_name = "user_notifications"
     paginate_by = 3
 
     def get_queryset(self):
-        # Get the list of appointments for the logged-in user with notifications
-        appointments_with_notifications = Appointment.objects.filter(email=self.request.user.email, notifications__seen=False)
-
+        notifications = Notification.objects.filter(
+            user=self.request.user,
+            seen=False
+        ).order_by("-create_time")
         # Mark those notifications as seen
-        for appointment in appointments_with_notifications:
-            appointment.notifications.update(seen=True)
-        return appointments_with_notifications
+        for notification in notifications:
+            notification.seen = True
+            notification.save()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # Extract the appointments from the notifications
-        context['user_notification'] = Appointment.objects.filter(email=self.request.user.email, notifications__seen=False)
-        return context
+        return notifications
 
 
 class AppointmentReschedule(LoginRequiredMixin, UpdateView):
@@ -240,23 +217,18 @@ class AppointmentReschedule(LoginRequiredMixin, UpdateView):
         date = request.POST.get("date")
         appointment = self.get_object()
         appointment.reschedule_date = date
-        previous_accepted_state = appointment.accepted  # Store the previous state
-        appointment.accepted = False if 'accepted' not in request.POST else True
+        appointment.accepted = False
         appointment.accepted_date = None
-        appointment.user_seen = True
-        appointment.reset_notifications()
         appointment.save()
 
         messages.add_message(request, messages.SUCCESS,
                         f"Request sent for reschedule: {appointment.first_name}")
 
-        # If the superuser has just accepted the rescheduling
-        if not previous_accepted_state and appointment.accepted:
-            Notification.objects.create(
-                 user=appointment.user,
-                 message=f"Your reschedule request for {appointment.reschedule_date} has been accepted.",
-                 appointment=appointment
-                )
+        Notification.objects.create(
+                user=request.user,
+                message=f"Your have rescheduled your appointment for {appointment.reschedule_date}.",
+                appointment=appointment
+            )
 
         return redirect(reverse("manage"))
 
@@ -295,7 +267,7 @@ class SendMessageView(View):
 
 
 class NotificationView(LoginRequiredMixin, View):
-    template_name = 'user_appointments.html'
+    template_name = 'user_notification.html'
 
     def get(self, request, *args, **kwargs):
         user_notifications = Notification.objects.filter(user=request.user).order_by('-create_time')

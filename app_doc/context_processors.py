@@ -7,17 +7,15 @@ logger = logging.getLogger(__name__)
 
 
 def get_notification(request):
-    count = 0  # initializing the count
+    count = 0
 
     if request.user.is_authenticated:
         try:
             # Use request.user instead of user
             notifications = Notification.objects.filter(
-                
+                user=request.user,
                 seen=False
             )
-            if not request.user.is_staff:
-                notifications = notifications.filter(user=request.user)
             count = notifications.count()
         except Exception as e:
             # Log any error that occurs

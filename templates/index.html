@@ -231,11 +231,11 @@
           <div class="form-group">
             <label for="message2">Message:</label>
             <textarea class="form-control" id="message2" name="message" rows="5"
-              placeholder="message">We are here to help!</textarea>
+              placeholder="We are here to help!"></textarea>
             <div class="error" id="err-message" style="display: none;">Please enter message</div>
           </div> <!-- /col -->
 
-          <!-- Display messages here -->
+          <!-- Display form_error here -->
           {% if form_errors %}
           <ul class="form-errors">
             {% for error in form_errors %}
@@ -245,7 +245,8 @@
           {% endif %}
           <div class="row">
             <button type="submit" class="btn btn-primary btn-shadow btn-rounded w-md" id="send">Send</button>
-          </div> <!-- /col -->
+          </div>
+           <!-- /col -->
 
         </form> <!-- /form -->
       </div> <!-- end col -->

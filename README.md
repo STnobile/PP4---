@@ -1,12 +1,21 @@
 # App_Doc
+
+
+# Mocks
+
+
+this is a quick sketch to give an idea about the design of the website.
+
+  ![devises responsive](/static/readme/mock3.png)
+  ![devises responsive](/static/readme/mock2.png)
+  ![devises responsive](/static/readme/mock1..png)
+  ![devises responsive](/static/readme/mock.png)
+
+
+
 ## Project 4
 
 "App_Doc" for a health care website with appointment booking and notification system features. Here's a summary of the main components and functionality described in the document:
-
-- HTML
-- CSS 
-- JS
-- PYTHON (DJANGO)
 
 ![devises responsive](/static/readme/amIresponsive.png)
 
@@ -71,15 +80,11 @@ The patient will be able to insert some personal date such as:
 * Subject
 * A message that explain his case.
 
-# Admin Log in
-* UserName:
-    test
- * password:
-    test
 
 # Features
   - User Features
   - Book Appointment Interface
+  - Notification 
 
   ![devises responsive](/static/readme/book-app.png)
 
@@ -111,10 +116,18 @@ The patient will be able to insert some personal date such as:
 
  Open Communication: Users can always reach out to the admin through the provided email addresses on the homepage.
 
- Admin Features
- Manage Appointments: The admin has the capability to view all appointments, accept them, or suggest reschedules.
+ # Notifications 
+  In this section the user will received notifications during his booking steps,
+  from the booking of the appointments to the booking accepted and the reschedule date.
+  here below there is a series of screenshot that represent the process.
 
- Accepting User's Booking.
+   ![devises responsive](/static/readme/app.conf.png)
+   ![devises responsive](/static/readme/app_res.png)
+   ![devises responsive](/static/readme/app.not.png)
+
+ # Admin Features
+ 
+ Manage Appointments: The admin has the capability to view all appointments, accept them, or suggest reschedules.
 
  Admin Accepting Booking.
  ![devises responsive](/static/readme/admin-accept-res.png)
@@ -123,7 +136,7 @@ The patient will be able to insert some personal date such as:
   ![devises responsive](/static/readme/admin-reschedule.png)
 
 
-# Feature and Implementation 
+# Future Features
 * A System of Chat bot, so the user can requests some answer on generic     issues, such as:
     * Bookings
     * General Healthcare advice
@@ -136,7 +149,7 @@ The patient will be able to insert some personal date such as:
 
 ## Validation 
 
-## HMTL
+## HTML
 - ![devises responsive](/static/readme/html_appiment_validation.png)
 - ![devises responsive](/static/readme/html_validation.png)
 
@@ -175,6 +188,12 @@ The project uses environment variables for configuration, including a secret key
 
 Make sure to set up these environment variables before running the application.
 
+# Technology 
+- HTML
+- CSS 
+- JS
+- PYTHON (DJANGO)
+
 # Debug
 
 - I had some issues the different if else statements on the template.
@@ -189,6 +208,21 @@ I fixed the bug adding
 ![devises responsive](/static/readme/if_else_statement_count.png)
 
 now all the bugs are fixed and working fine.
+
+## Testing
+ Run test and working fine on the terminal insert:
+   - python manage.py test.
+
+    Before you will run the test make sure to modify the setting.py inside the pp4 file.
+
+
+  ![devises responsive](/static/readme/setting.py.png)
+
+ after you have done that go to the terminal and run it. 
+
+
+![devises responsive](/static/readme/testing.png)
+
 
 ## Contributing
 

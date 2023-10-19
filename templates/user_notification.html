@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Your Notifications</h2>
+    
+    {% if user_notifications %}
+        <header>
+            <h3>Notifications:</h3>
+            <p><strong>Ciao</strong> {{ user }} 😄</p>
+            <a href="{% url 'manage' %}">Go to Manage Appointments</a>
+        </header>
+        <section>
+            <ul>
+                {% for notification in user_notifications %}
+                    <li>
+                        <article>
+                            <strong>Message:</strong> 
+                            <div>{{notification.message}}</div>
+                            <div>Booking Reason: {{notification.appointment.subject }}</div>
+                            <div>Booking Date: {{notification.appointment.sent_date | date}}</div>
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% else %}
+        <p class="text-center no-notifications">You have no notifications.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
