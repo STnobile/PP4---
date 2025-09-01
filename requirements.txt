@@ -1,6 +1,9 @@
+asgiref==3.9.1
+Django==5.2.5
+django-allauth==0.54.0
+oauthlib==3.3.1
+PyJWT==2.10.1
+python3-openid==3.2.0
+requests-oauthlib==2.0.0
+sqlparse==0.5.3
 whitenoise==6.9.0
-Django==3.2.19
-gunicorn
-dj-database-url
-cloudinary
-dj3-cloudinary-storage
