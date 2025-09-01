@@ -22,6 +22,7 @@ DEBUG = False
 # Replace hostname with your exact Heroku app if different
 ALLOWED_HOSTS = [
     'pp-4.herokuapp.com',
+    '.herokuapp.com',
     'localhost',
     '8000-stnobile-pp4-h1b4aap92kc.ws-eu105.gitpod.io',
 ]
@@ -30,6 +31,9 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://pp-4.herokuapp.com',
 ]
+
+# Behind Heroku’s proxy, make Django treat X-Forwarded-Proto=https as secure
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ── Installed apps ──────────────────────────────────────────────────────────
 INSTALLED_APPS = [
