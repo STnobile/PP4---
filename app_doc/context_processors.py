@@ -1,29 +1,29 @@
-from .models import Appointment, Notification
-from django.contrib.auth import get_user_model
+# app_doc/context_processors.py
+from django.db.utils import OperationalError, ProgrammingError
 import logging
 
-# Configuring logging
+from .models import Notification  # Appointment import not used here
+
 logger = logging.getLogger(__name__)
 
-
 def get_notification(request):
-    count = 0
+    """
+    Safe notification counter for templates.
+    Never raises — returns {'count': 0} on any problem so pages still render.
+    """
+    try:
+        user = getattr(request, "user", None)
+        if not getattr(user, "is_authenticated", False):
+            return {"count": 0}
 
-    if request.user.is_authenticated:
-        try:
-            # Use request.user instead of user
-            notifications = Notification.objects.filter(
-                user=request.user,
-                seen=False
-            )
-            count = notifications.count()
-        except Exception as e:
-            # Log any error that occurs
-            logger.error(f"Error getting notification count: {str(e)}", exc_info=True)
+        count = Notification.objects.filter(user=user, seen=False).count()
+        return {"count": count}
 
-    data = {"count": count}
+    except (OperationalError, ProgrammingError):
+        # DB not ready / migrations not applied yet (e.g., first boot, collectstatic)
+        logger.warning("get_notification: database not ready; returning 0")
+        return {"count": 0}
 
-    # Use logging instead of print for better practice
-    logger.info(f"Notification count: {data}")
-
-    return data
+    except Exception:
+        logger.exception("get_notification failed unexpectedly; returning 0")
+        return {"count": 0}
