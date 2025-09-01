@@ -21,6 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
+# --- CSRF on Heroku (required for POST forms) ---
+CSRF_TRUSTED_ORIGINS = [
+    'https://doc-app.herokuapp.com',
+]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -100,9 +106,10 @@ WSGI_APPLICATION = 'pp4.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-   'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+
+db_from_env: dj_database_url.parse(os.environ.get("DATABASE_URL"""), conn_max_age=600, ssl_require=True)
+DATABASES = {'default': db_from_env} if db_from_env else DATABASES
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
