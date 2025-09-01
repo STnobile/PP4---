@@ -21,7 +21,7 @@ DEBUG = False
 
 # Replace hostname with your exact Heroku app if different
 ALLOWED_HOSTS = [
-    'pp-4-3c193ee6d4c5.herokuapp.com',
+    'pp-4.herokuapp.com',
     '.herokuapp.com',
     'localhost',
     '8000-stnobile-pp4-h1b4aap92kc.ws-eu105.gitpod.io',
@@ -29,7 +29,7 @@ ALLOWED_HOSTS = [
 
 # Exact origins required for Django 3.2 CSRF on HTTPS
 CSRF_TRUSTED_ORIGINS = [
-    'https://pp-4-3c193ee6d4c5.herokuapp.com',
+    'https://pp-4.herokuapp.com',
 ]
 
 # Behind Heroku’s proxy, make Django treat X-Forwarded-Proto=https as secure
