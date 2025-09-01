@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------------------HEADER*/
 
 .header {
-  background: rgb(177, 177, 177) url("media/subject.png") no-repeat fixed center; 
+  background: rgb(177, 177, 177) url("../media/subject.png") no-repeat fixed center; 
   min-height: 1000px;
   font-family:'Source Sans Pro', sans-serif;
 }
