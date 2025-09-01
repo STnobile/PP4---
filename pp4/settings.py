@@ -17,7 +17,7 @@ TEMPLATES_DIR = BASE_DIR / 'templates'
 
 # ── Security / Debug ────────────────────────────────────────────────────────
 SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "0") == "1"
 
 # Replace hostname with your exact Heroku app if different
 ALLOWED_HOSTS = [
